@@ -18,6 +18,85 @@ import {
 } from 'react-bootstrap-icons';
 import './App.css';
 
+function ProjectCard({ project, index }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const carouselTimerRef = useState(null)[0];
+
+  useEffect(() => {
+    let interval;
+    if (isHovered && project.images.length > 1) {
+      interval = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % project.images.length);
+      }, 2000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isHovered, project.images.length]);
+
+  const handleDotClick = (dotIndex) => {
+    setCurrentImageIndex(dotIndex);
+  };
+
+  return (
+    <div 
+      className="project-card"
+      style={{ animationDelay: `${index * 0.1}s` }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="project-image">
+        {project.images.length > 0 ? (
+          <>
+            <div className="carousel">
+              {project.images.map((img, imgIndex) => (
+                <img
+                  key={imgIndex}
+                  src={`/${img}`}
+                  alt={`${project.title} screenshot ${imgIndex + 1}`}
+                  className={`carousel-image ${imgIndex === currentImageIndex ? 'active' : ''}`}
+                />
+              ))}
+            </div>
+            {project.images.length > 1 && (
+              <div className="carousel-dots">
+                {project.images.map((_, dotIndex) => (
+                  <button
+                    key={dotIndex}
+                    className={`dot ${dotIndex === currentImageIndex ? 'active' : ''}`}
+                    onClick={() => handleDotClick(dotIndex)}
+                    aria-label={`Go to image ${dotIndex + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <span className="project-icon">{project.icon}</span>
+        )}
+      </div>
+      <div className="project-content">
+        <h3>{project.title}</h3>
+        <p>{project.description}</p>
+        <div className="project-tech">
+          {project.tech.map((tech) => (
+            <span key={tech} className="tech-tag">{tech}</span>
+          ))}
+        </div>
+        <div className="project-links">
+          <button className="btn-icon" title="View Live">
+            🔗
+          </button>
+          <button className="btn-icon" title="View Code">
+            💻
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
@@ -81,31 +160,36 @@ function App() {
       title: 'LMD Dental Hub',
       description: 'A secure and user-friendly admin side dental website created as a team effort for our Software Engineering Course.',
       tech: ['ASP.NET', 'MySQL'],
-      image: <ClipboardHeartFill />,
+      icon: <ClipboardHeartFill />,
+      images: ['LMDLogin.jpeg', 'LMDHome.jpeg', 'LMDContent.jpeg'],
     },
     {
       title: 'WIZ',
       description: 'An online study platform where students can test their knowledge based on content they input.',
       tech: ['PHP', 'MySQL'],
-      image: <BookFill />,
+      icon: <BookFill />,
+      images: ['WizLogin.jpeg', 'WizHome.jpeg', 'WizContent.jpeg'],
     },
     {
       title: 'CICSelect',
       description: 'An online voting platform for CICS students with secure voting system and real-time tallying.',
       tech: ['ASP.NET', 'MySQL'],
-      image: <FileEarmarkCheckFill />,
+      icon: <FileEarmarkCheckFill />,
+      images: ['CICSSelectHome.jpeg', 'CICSSelectContent.jpeg', 'CICSSelectAdmin.jpeg'],
     },
     {
       title: 'UST rE-CYCLE',
       description: 'An online donation app for UST students with tracking system and secure payment integration.',
       tech: ['Node.js', 'React', 'PostgreSQL'],
-      image: <Recycle />,
+      icon: <Recycle />,
+      images: ['USTreCycleLogin.jpeg', 'USTreCycleLoading.jpeg', 'USTreCycleHome.jpeg', 'USTreCycleAdmin.jpeg'],
     },
     {
       title: 'Falcon Eye',
       description: 'A comprehensive school safety and incident management platform with real-time tracking and AI chatbot.',
       tech: ['React', 'Node.js', 'Firebase', 'Socket.IO'],
-      image: <EyeFill />,
+      icon: <EyeFill />,
+      images: [],
     },
   ];
 
@@ -320,32 +404,7 @@ function App() {
           </p>
           <div className="projects-grid">
             {projects.map((project, index) => (
-              <div 
-                key={project.title} 
-                className="project-card"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="project-image">
-                  <span>{project.image}</span>
-                </div>
-                <div className="project-content">
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                  <div className="project-tech">
-                    {project.tech.map((tech) => (
-                      <span key={tech} className="tech-tag">{tech}</span>
-                    ))}
-                  </div>
-                  <div className="project-links">
-                    <button className="btn-icon" title="View Live">
-                      🔗
-                    </button>
-                    <button className="btn-icon" title="View Code">
-                      💻
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <ProjectCard key={project.title} project={project} index={index} />
             ))}
           </div>
         </div>
