@@ -12,7 +12,6 @@ import {
   Facebook,
   FileEarmarkCheckFill,
   Github,
-  PersonCircle,
   Recycle,
   TelephoneFill
 } from 'react-bootstrap-icons';
@@ -323,8 +322,8 @@ function App() {
           <div className="about-content">
             <div className="about-image">
               <div className="image-frame">
-                <div className="placeholder-image">
-                  <PersonCircle />
+                <div className="profile-image">
+                  <img src="/profpic.jpeg" alt="Angelo Valeros" />
                 </div>
                 <div className="frame-decoration"></div>
               </div>
