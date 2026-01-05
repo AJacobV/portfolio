@@ -21,7 +21,6 @@ import './App.css';
 function ProjectCard({ project, index }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const carouselTimerRef = useState(null)[0];
 
   useEffect(() => {
     let interval;
@@ -79,18 +78,25 @@ function ProjectCard({ project, index }) {
       <div className="project-content">
         <h3>{project.title}</h3>
         <p>{project.description}</p>
+        {project.courseProject && (
+          <p className="course-note">📚 Course Project</p>
+        )}
         <div className="project-tech">
           {project.tech.map((tech) => (
             <span key={tech} className="tech-tag">{tech}</span>
           ))}
         </div>
         <div className="project-links">
-          <button className="btn-icon" title="View Live">
-            🔗
-          </button>
-          <button className="btn-icon" title="View Code">
-            💻
-          </button>
+          {!project.courseProject && project.liveLink && (
+            <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="btn-link" title="View Live">
+              Live
+            </a>
+          )}
+          {project.codeLink && (
+            <a href={project.codeLink} target="_blank" rel="noopener noreferrer" className="btn-link" title="View Code">
+              Code
+            </a>
+          )}
         </div>
       </div>
     </div>
@@ -162,6 +168,7 @@ function App() {
       tech: ['ASP.NET', 'MySQL'],
       icon: <ClipboardHeartFill />,
       images: ['LMDLogin.jpeg', 'LMDHome.jpeg', 'LMDContent.jpeg'],
+      courseProject: true,
     },
     {
       title: 'WIZ',
@@ -169,6 +176,7 @@ function App() {
       tech: ['PHP', 'MySQL'],
       icon: <BookFill />,
       images: ['WizLogin.jpeg', 'WizHome.jpeg', 'WizContent.jpeg'],
+      courseProject: true,
     },
     {
       title: 'CICSelect',
@@ -176,6 +184,7 @@ function App() {
       tech: ['ASP.NET', 'MySQL'],
       icon: <FileEarmarkCheckFill />,
       images: ['CICSSelectHome.jpeg', 'CICSSelectContent.jpeg', 'CICSSelectAdmin.jpeg'],
+      courseProject: true,
     },
     {
       title: 'UST rE-CYCLE',
@@ -183,13 +192,31 @@ function App() {
       tech: ['Node.js', 'React', 'PostgreSQL'],
       icon: <Recycle />,
       images: ['USTreCycleLogin.jpeg', 'USTreCycleLoading.jpeg', 'USTreCycleHome.jpeg', 'USTreCycleAdmin.jpeg'],
+      liveLink: 'https://ust-re-cycle.vercel.app',
     },
     {
       title: 'Falcon Eye',
       description: 'A comprehensive school safety and incident management platform with real-time tracking and AI chatbot.',
       tech: ['React', 'Node.js', 'Firebase', 'Socket.IO'],
       icon: <EyeFill />,
-      images: [],
+      images: ['falconEye_dashboard.png', 'falconEye_heatmappage.png', 'falconEye_incidentreportpage.png', 'falconEye_lostandfountpage.png'],
+      liveLink: 'https://falconeye.school',
+    },
+    {
+      title: 'Amore Lux',
+      description: 'A design page showcasing perfumes from Amore Lux store founded by Alexandra Esmatao. Created using React.js, purely frontend.',
+      tech: ['React'],
+      icon: <BrushFill />,
+      images: ['AmoreLux_title.jpg', 'AmoreLux_featuredfragances.jpg', 'AmoreLux_menscollection.jpg', 'AmoreLux_womenscollection.jpg'],
+      liveLink: 'https://amoreluxe.vercel.app',
+    },
+    {
+      title: 'JV TechHub',
+      description: 'An inventory project created using Laravel Framework as a partial fulfillment of Web Application Development course.',
+      tech: ['Laravel', 'PHP', 'MySQL'],
+      icon: <BoxSeamFill />,
+      images: ['JVTechHub_loginpage.png', 'JVTechHub_dashboard.png'],
+      liveLink: 'https://jvtechhub2.onrender.com',
     },
   ];
 
@@ -249,6 +276,13 @@ function App() {
               >
                 Contact Me
               </button>
+              <a 
+                href="/Resume.pdf" 
+                download="Angelo_Valeros_Resume.pdf"
+                className="btn btn-secondary"
+              >
+                Download Resume 📄
+              </a>
             </div>
           </div>
           <div className="hero-visual fade-in-delay-2">
@@ -307,17 +341,14 @@ function App() {
               </p>
               <div className="about-highlights">
                 <div className="highlight">
-                  <span className="highlight-number">3+</span>
+                  <span className="highlight-number">3</span>
                   <span className="highlight-text">Years of Coding</span>
                 </div>
                 <div className="highlight">
-                  <span className="highlight-number">15+</span>
+                  <span className="highlight-number">5</span>
                   <span className="highlight-text">Projects Completed</span>
                 </div>
-                <div className="highlight">
-                  <span className="highlight-number">10+</span>
-                  <span className="highlight-text">Technologies</span>
-                </div>
+               
               </div>
               <a href="#contact" className="btn btn-primary" onClick={(e) => {
                 e.preventDefault();
@@ -339,55 +370,34 @@ function App() {
           <p className="section-subtitle">
             Technologies and programming languages I've learned throughout my education
           </p>
-          <div className="skills-grid">
-            {skills.map((skill, index) => (
-              <div 
-                key={skill.name} 
-                className="skill-card"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="skill-icon">{skill.icon}</div>
-                <h3>{skill.name}</h3>
-                <div className="skill-bar">
-                  <div 
-                    className="skill-progress" 
-                    style={{ width: `${skill.level}%` }}
-                  >
-                    <span className="skill-level">{skill.level}%</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          
           <div className="skills-categories">
             <div className="category">
               <h3>Development</h3>
               <p style={{fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1rem'}}>I can program using PHP, React, Node.js, SQL, and ASP.</p>
-              <div className="tags">
-                <span>PHP</span>
-                <span>React</span>
-                <span>Node.js</span>
-                <span>SQL</span>
-                <span>ASP.NET</span>
-              </div>
             </div>
             <div className="category">
               <h3>Design</h3>
               <p style={{fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1rem'}}>Creating beautiful user interfaces that combine aesthetics with functionality.</p>
-              <div className="tags">
-                <span>UI/UX</span>
-                <span>Figma</span>
-                <span>Responsive Design</span>
-              </div>
             </div>
             <div className="category">
               <h3>Quality Assurance</h3>
               <p style={{fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1rem'}}>Ensuring software quality through systematic testing and bug identification.</p>
-              <div className="tags">
-                <span>Testing</span>
-                <span>Debugging</span>
-                <span>Process Improvement</span>
-              </div>
+            </div>
+          </div>
+
+          <div className="skills-tags-container">
+            <h3 className="skills-tags-title">Technologies & Tools</h3>
+            <p>Languages I've learned:</p>
+            <div className="skills-tags">
+              <span className="skill-tag">React.js</span>
+              <span className="skill-tag">Node.js</span>
+              <span className="skill-tag">PHP</span>
+              <span className="skill-tag">ASP.NET</span>
+              <span className="skill-tag">MySQL</span>
+              <span className="skill-tag">Java</span>
+              <span className="skill-tag">HTML/CSS</span>
+              <span className="skill-tag">Laravel Framework</span>
             </div>
           </div>
         </div>
@@ -424,7 +434,8 @@ function App() {
               <div className="contact-card">
                 <div className="contact-icon"><EnvelopeFill /></div>
                 <h3>Email</h3>
-                <p>angelojacob.valeros.cics@ust.edu.ph</p>
+                <p><strong>School Email:</strong><br />angelojacob.valeros.cics@ust.edu.ph</p>
+                <p><strong>Business Email:</strong><br />bocajvaleros@gmail.com</p>
                 <a href="mailto:angelojacob.valeros.cics@ust.edu.ph" className="contact-link">
                   Send an Email
                 </a>
@@ -449,24 +460,6 @@ function App() {
                 </a>
               </div>
             </div>
-            <form className="contact-form">
-              <h3>Send Me a Message</h3>
-              <div className="form-group">
-                <input type="text" placeholder="Your Name" required />
-              </div>
-              <div className="form-group">
-                <input type="email" placeholder="Your Email" required />
-              </div>
-              <div className="form-group">
-                <input type="text" placeholder="Subject" required />
-              </div>
-              <div className="form-group">
-                <textarea placeholder="Your Message" rows="5" required></textarea>
-              </div>
-              <button type="submit" className="btn btn-primary">
-                Send Message ✉️
-              </button>
-            </form>
           </div>
         </div>
       </section>

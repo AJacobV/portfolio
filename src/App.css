@@ -665,8 +665,9 @@ section {
 
 .skills-categories {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
+  margin-bottom: 3rem;
 }
 
 .category {
@@ -675,6 +676,13 @@ section {
   border-radius: 15px;
   border: 1px solid var(--border);
   text-align: center;
+  transition: all var(--transition-medium);
+}
+
+.category:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold-primary);
+  box-shadow: 0 10px 30px var(--shadow);
 }
 
 .category h3 {
@@ -683,25 +691,50 @@ section {
   font-size: 1.3rem;
 }
 
-.tags {
+.skills-tags-container {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.skills-tags-title {
+  color: var(--text);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.skills-tags-container p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.skills-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 1rem;
   justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-.tags span {
-  background: var(--bg);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  border: 1px solid var(--border);
-  transition: all var(--transition-fast);
+.skill-tag {
+  background: var(--bg-secondary);
+  color: var(--text);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 2px solid var(--border);
+  transition: all var(--transition-medium);
+  cursor: default;
 }
 
-.tags span:hover {
+.skill-tag:hover {
   border-color: var(--gold-primary);
-  color: var(--gold-primary);
+  background: var(--gold-primary);
+  color: #000;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px var(--shadow);
 }
 
 /* =============================================
@@ -871,6 +904,33 @@ section {
   background: rgba(212, 175, 55, 0.1);
 }
 
+.btn-link {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--gold-primary);
+  background: transparent;
+  color: var(--gold-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-link:hover {
+  background: var(--gold-primary);
+  color: var(--bg-secondary);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-link:active {
+  transform: translateY(0);
+}
+
 /* =============================================
    CONTACT SECTION
    ============================================= */
@@ -905,8 +965,8 @@ section {
   max-width: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 0.75rem;
+  justify-content: space-evenly;
+  gap: 0.5rem;
 }
 
 .contact-card:hover {
@@ -933,6 +993,12 @@ section {
 .contact-card p {
   color: var(--text-secondary);
   font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.contact-card p strong {
+  color: var(--text);
+  font-weight: 600;
 }
 
 .contact-link {
@@ -954,7 +1020,8 @@ section {
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   flex: 1;
   max-width: 300px;
   gap: 1rem;
