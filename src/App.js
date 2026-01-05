@@ -212,7 +212,7 @@ function App() {
     {
       title: 'JV TechHub',
       description: 'An inventory project created using Laravel Framework as a partial fulfillment of Web Application Development course.',
-      tech: ['Laravel', 'PHP', 'MySQL'],
+      tech: ['Laravel', 'PHP', 'PostgreSQL'],
       icon: <BoxSeamFill />,
       images: ['JVTechHub_loginpage.png', 'JVTechHub_dashboard.png'],
       liveLink: 'https://jvtechhub2.onrender.com',
@@ -344,7 +344,7 @@ function App() {
                   <span className="highlight-text">Years of Coding</span>
                 </div>
                 <div className="highlight">
-                  <span className="highlight-number">5</span>
+                  <span className="highlight-number">6</span>
                   <span className="highlight-text">Projects Completed</span>
                 </div>
                
