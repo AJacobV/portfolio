@@ -107,6 +107,8 @@ function App() {
   const [navOpen, setNavOpen] = useState(false);
   const [closeTimer, setCloseTimer] = useState(null);
   const [currentProfilePic, setCurrentProfilePic] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
   const profilePics = ['/profpic1.jpeg', '/profpic2.jpg', '/profpic3.jpg'];
 
@@ -115,6 +117,30 @@ function App() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       setDarkMode(true);
+    }
+
+    // Check if user has visited before
+    const hasVisited = sessionStorage.getItem('hasVisited');
+    
+    if (!hasVisited) {
+      // First visit - show loading animation
+      let progress = 0;
+      const progressInterval = setInterval(() => {
+        progress += Math.random() * 15;
+        if (progress > 100) progress = 100;
+        setLoadingProgress(progress);
+        
+        if (progress === 100) {
+          clearInterval(progressInterval);
+          setTimeout(() => {
+            setLoading(false);
+            sessionStorage.setItem('hasVisited', 'true');
+          }, 500);
+        }
+      }, 200);
+    } else {
+      // Not first visit - skip loading
+      setLoading(false);
     }
   }, []);
 
@@ -232,6 +258,32 @@ function App() {
 
   return (
     <div className={`App ${darkMode ? 'dark' : 'light'}`}>
+      {/* Loading Animation */}
+      {loading && (
+        <div className={`loading-screen ${darkMode ? 'dark' : 'light'}`}>
+          <div className="loading-content">
+            <div className="logo-container">
+              <div className="logo-circle">
+                <span className="logo-initial">AV</span>
+              </div>
+              <div className="loading-rings">
+                <div className="ring ring-1"></div>
+                <div className="ring ring-2"></div>
+                <div className="ring ring-3"></div>
+              </div>
+            </div>
+            <h2 className="loading-text">Angelo Valeros</h2>
+            <div className="loading-bar-container">
+              <div 
+                className="loading-bar" 
+                style={{ width: `${loadingProgress}%` }}
+              ></div>
+            </div>
+            <p className="loading-subtitle">Crafting Excellence</p>
+          </div>
+        </div>
+      )}
+
       {/* Navigation */}
       <nav 
         className={`navbar ${navOpen ? 'open' : ''}`}
@@ -452,9 +504,13 @@ function App() {
               <div className="contact-card">
                 <div className="contact-icon"><EnvelopeFill /></div>
                 <h3>Email</h3>
-                <p><strong>School Email:</strong><br />angelojacob.valeros.cics@ust.edu.ph</p>
-                <p><strong>Business Email:</strong><br />bocajvaleros@gmail.com</p>
-                <a href="mailto:angelojacob.valeros.cics@ust.edu.ph" className="contact-link">
+                <p><br />angelojacob.valeros.cics@ust.edu.ph</p>
+                <a 
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=angelojacob.valeros.cics@ust.edu.ph&su=Inquiry&body=Hello%2C%20we%27ve%20had%20a%20chance%20to%20explore%20your%20internship%20portfolio%20and%20would%20love%20to%20connect%20with%20you%20to%20talk%20more%20about%20your%20work%20and%20potential%20opportunities."
+                  className="contact-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Send an Email
                 </a>
               </div>
