@@ -106,6 +106,9 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [closeTimer, setCloseTimer] = useState(null);
+  const [currentProfilePic, setCurrentProfilePic] = useState(0);
+
+  const profilePics = ['/profpic1.jpeg', '/profpic2.jpg', '/profpic3.jpg'];
 
   useEffect(() => {
     // Check for saved theme preference
@@ -113,6 +116,14 @@ function App() {
     if (savedTheme === 'dark') {
       setDarkMode(true);
     }
+  }, []);
+
+  useEffect(() => {
+    // Auto-scroll profile pictures
+    const interval = setInterval(() => {
+      setCurrentProfilePic((prev) => (prev + 1) % profilePics.length);
+    }, 4000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -322,10 +333,18 @@ function App() {
           <div className="about-content">
             <div className="about-image">
               <div className="image-frame">
-                <div className="profile-image">
-                  <img src="/profpic.jpeg" alt="Angelo Valeros" />
-                </div>
-                <div className="frame-decoration"></div>
+                {profilePics.map((pic, index) => {
+                  const prevIndex = (currentProfilePic - 1 + profilePics.length) % profilePics.length;
+                  const isActive = index === currentProfilePic;
+                  const isPrev = index === prevIndex;
+                  const className = isActive ? 'active' : (isPrev ? 'back' : 'hidden');
+                  
+                  return (
+                    <div key={index} className={`profile-image ${className}`}>
+                      <img src={pic} alt="Angelo Valeros" />
+                    </div>
+                  );
+                })}
               </div>
             </div>
             <div className="about-text">
