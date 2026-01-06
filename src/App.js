@@ -239,8 +239,8 @@ function App() {
       liveLink: 'https://falconeye.school',
     },
     {
-      title: 'Amore Lux',
-      description: 'A design page showcasing perfumes from Amore Lux store founded by Alexandra Esmatao. Created using React.js, purely frontend.',
+      title: 'Amore Luxe',
+      description: 'A design page showcasing perfumes from Amore Luxe store founded by Alexandra Esmatao. Created using React.js, purely frontend.',
       tech: ['React'],
       icon: <BrushFill />,
       images: ['AmoreLux_title.jpg', 'AmoreLux_featuredfragances.jpg', 'AmoreLux_menscollection.jpg', 'AmoreLux_womenscollection.jpg'],
