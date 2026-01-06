@@ -187,7 +187,7 @@ function App() {
     },
     {
       title: 'UST rE-CYCLE',
-      description: 'An online donation app for UST students with tracking system and secure payment integration.',
+      description: 'An online donation app for UST students with tracking system and ticketing system.',
       tech: ['Node.js', 'React', 'PostgreSQL'],
       icon: <Recycle />,
       images: ['USTreCycleLogin.jpeg', 'USTreCycleLoading.jpeg', 'USTreCycleHome.jpeg', 'USTreCycleAdmin.jpeg'],
