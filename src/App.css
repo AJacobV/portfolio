@@ -1086,6 +1086,13 @@ section {
   flex: 1;
   max-width: 300px;
   gap: 1rem;
+  transition: all var(--transition-medium);
+}
+
+.social-links:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold-primary);
+  box-shadow: 0 15px 40px var(--shadow);
 }
 
 .social-links h3 {
