@@ -13,11 +13,11 @@
   --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F4D03F 50%, #B8860B 100%);
   
   /* Light Theme */
-  --light-bg: #FAFAFA;
-  --light-bg-secondary: #FFFFFF;
+  --light-bg: #E8E8E8;
+  --light-bg-secondary: #F0F0F0;
   --light-text: #2D2D2D;
   --light-text-secondary: #666666;
-  --light-border: #E0E0E0;
+  --light-border: #D0D0D0;
   --light-shadow: rgba(0, 0, 0, 0.1);
   
   /* Dark Theme */
