@@ -264,7 +264,7 @@ function App() {
           <div className="loading-content">
             <div className="logo-container">
               <div className="logo-circle">
-                <span className="logo-initial">AV</span>
+                <span className="logo-initial">AJV</span>
               </div>
               <div className="loading-rings">
                 <div className="ring ring-1"></div>
