@@ -10,7 +10,7 @@ function AboutMe() {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [profilePics.length]);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
