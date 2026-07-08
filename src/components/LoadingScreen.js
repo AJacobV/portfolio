@@ -181,9 +181,9 @@ function LoadingScreen({ onDone }) {
 
       // Glass-like fill
       const grad = ctx.createLinearGradient(-p.w / 2, -p.h / 2, p.w / 2, p.h / 2);
-      grad.addColorStop(0, 'rgba(255, 255, 255, 0.05)');
-      grad.addColorStop(0.5, 'rgba(225, 6, 0, 0.12)');
-      grad.addColorStop(1, 'rgba(8, 8, 8, 0.95)');
+      grad.addColorStop(0, 'rgba(255, 255, 255, 0.15)');
+      grad.addColorStop(0.5, 'rgba(200, 200, 210, 0.12)');
+      grad.addColorStop(1, 'rgba(18, 18, 22, 0.95)');
       ctx.fillStyle = grad;
       ctx.fill();
 
@@ -196,15 +196,15 @@ function LoadingScreen({ onDone }) {
       const fontSize = Math.min(Math.max(vw * 0.06, minFontSize), maxFontSize);
       
       ctx.font = `900 ${fontSize}px "Space Grotesk", sans-serif`;
-      ctx.fillStyle = '#fff';
+      ctx.fillStyle = '#e10600';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       if ('letterSpacing' in ctx) {
         ctx.letterSpacing = '0.22em';
       }
       
-      ctx.shadowColor = `rgba(225, 6, 0, ${0.6 * currentOpacity})`;
-      ctx.shadowBlur = 16;
+      ctx.shadowColor = `rgba(225, 6, 0, ${0.5 * currentOpacity})`;
+      ctx.shadowBlur = 20;
       ctx.shadowOffsetX = 0;
       ctx.shadowOffsetY = 0;
 
@@ -223,7 +223,7 @@ function LoadingScreen({ onDone }) {
       ctx.stroke();
 
       // Inner glow
-      ctx.strokeStyle = `rgba(225, 6, 0, ${0.15 * currentOpacity})`;
+      ctx.strokeStyle = `rgba(180, 180, 190, ${0.2 * currentOpacity})`;
       ctx.lineWidth = 0.5;
       ctx.stroke();
 
@@ -273,7 +273,7 @@ function LoadingScreen({ onDone }) {
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)), radial-gradient(circle at 50% 45%, rgba(225, 6, 0, 0.08), transparent 35%)',
+            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)), radial-gradient(circle at 50% 45%, rgba(200, 200, 210, 0.1), transparent 35%)',
             zIndex: 1
           }} 
         />

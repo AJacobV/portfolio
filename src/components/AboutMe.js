@@ -1,77 +1,352 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 
-function AboutMe() {
-  const [currentProfilePic, setCurrentProfilePic] = useState(0);
-  const profilePics = ['/profpic1.jpeg', '/profpic2.jpg', '/profpic3.jpg'];
+const sectionStyle = {
+  position: 'relative',
+  zIndex: 1,
+  padding: '7rem 0',
+};
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentProfilePic((prev) => (prev + 1) % profilePics.length);
-    }, 4000);
+const containerStyle = {
+  width: 'min(1200px, calc(100% - 3rem))',
+  margin: '0 auto',
+};
 
-    return () => clearInterval(interval);
-  }, [profilePics.length]);
+const SHARD_COUNT = 12;
 
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+function generateShards() {
+  const shards = [];
+  const cols = 4;
+  for (let i = 0; i < SHARD_COUNT; i++) {
+    const row = Math.floor(i / cols);
+    const col = i % cols;
+    const angle = (i / SHARD_COUNT) * 360;
+    const distance = 200 + Math.random() * 150;
+    const rotation = -160 + Math.random() * 320;
+    const exitDist = 80 + Math.random() * 100;
+    const exitRotation = -120 + Math.random() * 240;
+    shards.push({
+      id: i, row, col,
+      tx: `${Math.cos(angle * Math.PI / 180) * distance}px`,
+      ty: `${Math.sin(angle * Math.PI / 180) * distance}px`,
+      rot: `${rotation}deg`,
+      ex: `${Math.cos(angle * Math.PI / 180) * exitDist}px`,
+      ey: `${Math.sin(angle * Math.PI / 180) * exitDist}px`,
+      er: `${exitRotation}deg`,
+      delay: i * 55,
+    });
+  }
+  return shards;
+}
+
+/**
+ * Watches the whole section as one unit.
+ * Fully bidirectional — same threshold logic applies whether
+ * the user is scrolling down into the section or back up out of it.
+ *
+ * Phase states:
+ *   'hidden'   — section completely out of view (no animations)
+ *   'entering' — section dominates ≥55% of the viewport (build animation)
+ *   'exiting'  — section is leaving the viewport, either direction (shatter)
+ *
+ * Threshold symmetry (mirrors the 55% rule in App.js getDominantSection):
+ *   ↓ Scroll-down exit  : rect.top  < vh × 0.06  (leaving from the top)
+ *   ↑ Scroll-up exit    : rect.top  > vh × 0.55  (sliding off to the bottom)
+ *   Enter (both dirs)   : rect.top  < vh × 0.45  AND  rect.bottom > vh × 0.5
+ */
+function useSectionPhase() {
+  const ref = useRef(null);
+  const [phase, setPhase] = useState('hidden');
+  const phaseRef = useRef('hidden');
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+  const lastChangeAt = useRef(0);
+
+  const applyPhase = (next) => {
+    if (phaseRef.current === next) return;
+    const now = Date.now();
+    if (now - lastChangeAt.current < 750) return; // cooldown — prevents rapid toggling
+    lastChangeAt.current = now;
+    phaseRef.current = next;
+    setPhase(next);
   };
 
-  return (
-    <section id="about" className="about">
-      <div className="container">
-        <h2 className="section-title">
-          <span className="gold-text">About</span> Me
-        </h2>
-        <div className="about-content">
-          <div className="about-image">
-            <div className="image-frame">
-              {profilePics.map((pic, index) => {
-                const prevIndex = (currentProfilePic - 1 + profilePics.length) % profilePics.length;
-                const isActive = index === currentProfilePic;
-                const isPrev = index === prevIndex;
-                const className = isActive ? 'active' : (isPrev ? 'back' : 'hidden');
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
 
-                return (
-                  <div key={index} className={`profile-image ${className}`}>
-                    <img src={pic} alt="Angelo Valeros" />
-                  </div>
-                );
-              })}
+    const handleScroll = () => {
+      if (ticking.current) return;
+      ticking.current = true;
+      requestAnimationFrame(() => {
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const scrollY = window.scrollY;
+        const scrollingDown = scrollY > lastScrollY.current;
+        lastScrollY.current = scrollY;
+        const cur = phaseRef.current;
+
+        // ── Completely out of view ── reset regardless of direction
+        if (rect.bottom <= 0 || rect.top >= vh) {
+          applyPhase('hidden');
+        }
+
+        // ── Scroll-DOWN exit ──
+        // Section top has nearly left the top of the viewport
+        else if (scrollingDown && rect.top < vh * 0.06 && rect.bottom > 0) {
+          applyPhase('exiting');
+        }
+
+        // ── Scroll-UP exit ──
+        // Section is sliding back down off the bottom of the viewport.
+        // Mirrors the scroll-down exit threshold (55% coverage boundary).
+        else if (!scrollingDown && rect.top > vh * 0.55 && cur !== 'hidden') {
+          applyPhase('exiting');
+        }
+
+        // ── Enter (both directions) ──
+        // Section straddles the viewport center and covers enough of the screen.
+        // This condition fires when scrolling down into the section AND
+        // when scrolling back up into it from below.
+        else if (rect.top < vh * 0.45 && rect.bottom > vh * 0.5) {
+          applyPhase('entering');
+        }
+
+        ticking.current = false;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // seed on mount
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return [ref, phase];
+}
+
+function AboutMe() {
+  const [sectionRef, sectionPhase] = useSectionPhase();
+
+  // shardPhase: 'hidden' | 'building' | 'built' | 'shattering'
+  const [shardPhase, setShardPhase] = useState('hidden');
+  const shards = useMemo(() => generateShards(), []);
+  const prevPhase = useRef('hidden');
+  const buildTimer = useRef(null);
+  const shatterTimer = useRef(null);
+
+  useEffect(() => {
+    if (buildTimer.current) clearTimeout(buildTimer.current);
+    if (shatterTimer.current) clearTimeout(shatterTimer.current);
+
+    if (sectionPhase === 'entering' && prevPhase.current !== 'entering') {
+      setShardPhase('building');
+      buildTimer.current = setTimeout(
+        () => setShardPhase('built'),
+        shards.length * 55 + 800
+      );
+    } else if (sectionPhase === 'exiting' && prevPhase.current !== 'exiting') {
+      setShardPhase('shattering');
+      shatterTimer.current = setTimeout(() => setShardPhase('hidden'), 750);
+    } else if (sectionPhase === 'hidden') {
+      setShardPhase('hidden');
+    }
+
+    prevPhase.current = sectionPhase;
+
+    return () => {
+      if (buildTimer.current) clearTimeout(buildTimer.current);
+      if (shatterTimer.current) clearTimeout(shatterTimer.current);
+    };
+  }, [sectionPhase, shards.length]);
+
+  const scrollToSection = (id) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+
+  const headerClass =
+    sectionPhase === 'entering' ? 'scroll-fade entering' :
+    sectionPhase === 'exiting'  ? 'scroll-fade exiting'  :
+    'scroll-fade enter-up';
+
+  const photoClass =
+    sectionPhase === 'entering' ? 'photo-fade entering' :
+    sectionPhase === 'exiting'  ? 'photo-fade exiting'  :
+    'photo-fade enter-up';
+
+  const contentVisible = shardPhase === 'built';
+
+  // glass-card wrapper visibility:
+  // invisible when there's nothing to show (hidden phase) or fully faded during shatter
+  const glassWrapperClass =
+    shardPhase === 'hidden'     ? 'glass-wrapper-invisible' :
+    shardPhase === 'shattering' ? 'glass-wrapper-shattering' : '';
+
+  return (
+    <section id="about" style={sectionStyle}>
+      <div ref={sectionRef} style={containerStyle}>
+        {/* Header */}
+        <div className={headerClass} style={{ marginBottom: '3.5rem' }}>
+          <h2 style={{
+            fontSize: 'clamp(2rem, 4vw, 3.4rem)',
+            textAlign: 'center',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            margin: '0 0 0.5rem',
+            color: '#f7f7f7',
+          }}>
+            <span className="gold-text">About</span> Me
+          </h2>
+          <p style={{
+            textAlign: 'center',
+            color: '#b2b2b2',
+            maxWidth: '720px',
+            margin: '0 auto',
+            lineHeight: 1.6,
+          }}>
+            Get to know the person behind the code.
+          </p>
+        </div>
+
+        {/* Two-column layout */}
+        <div className="about-flex" style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '2rem',
+          alignItems: 'flex-start',
+        }}>
+          {/* Left — rotating fan photo cards */}
+          <div className={photoClass} style={{ flex: '0 0 400px', maxWidth: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="pc-wrap">
+              {/* Card 1 */}
+              <div className="pc-card pc-card-1">
+                <div className="pc-inner">
+                  <img src="/profpic1.jpeg" alt="Angelo Valeros" />
+                </div>
+              </div>
+              {/* Card 2 */}
+              <div className="pc-card pc-card-2">
+                <div className="pc-inner">
+                  <img src="/profpic2.jpg" alt="Angelo Valeros" />
+                </div>
+              </div>
+              {/* Card 3 */}
+              <div className="pc-card pc-card-3">
+                <div className="pc-inner">
+                  <img src="/profpic3.jpg" alt="Angelo Valeros" />
+                </div>
+              </div>
+              {/* Decorative bottom lines */}
+              <div className="pc-lines">
+                <div className="pc-line" />
+                <div className="pc-line" />
+              </div>
             </div>
           </div>
-          <div className="about-text">
-            <h3>Who I Am</h3>
-            <p>
-              I am a 4th year student at the <span className="gold-text">University of Santo Tomas</span> with a passion for technology and adventure.
-              I started my programming journey with Java and have since expanded to PHP, React, Node.js, SQL, and ASP.
-            </p>
-            <p>
-              I am a passionate web developer with a knack for creating clean, user-friendly, and responsive websites.
-              When I'm not coding, you can find me exploring new hiking trails, dabbling in digital art, or building custom keyboards.
-            </p>
-            <div className="about-highlights">
-              <div className="highlight">
-                <span className="highlight-number">3</span>
-                <span className="highlight-text">Years of Coding</span>
-              </div>
-              <div className="highlight">
-                <span className="highlight-number">6</span>
-                <span className="highlight-text">Projects Completed</span>
+
+          {/* Right — glass card.
+              The wrapper controls overall visibility so the card's
+              border + shadow don't show as a floating box.
+              The glass-card itself has NO background — shards carry
+              the solid surface, so when they shatter the rectangle
+              disappears with them.                                    */}
+          <div className={`glass-wrapper ${glassWrapperClass}`} style={{ flex: '1 1 400px' }}>
+            <div className="glass-card" style={{ position: 'relative', minHeight: '320px' }}>
+
+              {/* Glass shards — they ARE the visual surface */}
+              {shards.map((shard) => {
+                const cols = 4, rows = 3;
+                const w = 100 / cols, h = 100 / rows;
+                const left = shard.col * w, top = shard.row * h;
+                const isTop    = shard.row === 0;
+                const isBottom = shard.row === rows - 1;
+                const isLeft   = shard.col === 0;
+                const isRight  = shard.col === cols - 1;
+                return (
+                  <div
+                    key={shard.id}
+                    className={`glass-shard ${
+                      shardPhase === 'building'   ? 'building'  :
+                      shardPhase === 'shattering' ? 'shattering':
+                      shardPhase === 'built'      ? 'assembled' : ''
+                    }`}
+                    style={{
+                      position: 'absolute',
+                      left: `${left}%`,
+                      top: `${top}%`,
+                      width: `${w}%`,
+                      height: `${h}%`,
+                      borderRadius:
+                        isTop    && isLeft   ? '24px 0 0 0'  :
+                        isTop    && isRight  ? '0 24px 0 0'  :
+                        isBottom && isLeft   ? '0 0 0 24px'  :
+                        isBottom && isRight  ? '0 0 24px 0'  : '0',
+                      animationDelay: shardPhase === 'building' ? `${shard.delay}ms` : '0ms',
+                      '--shard-tx':  shard.tx,
+                      '--shard-ty':  shard.ty,
+                      '--shard-rot': shard.rot,
+                      '--shard-ex':  shard.ex,
+                      '--shard-ey':  shard.ey,
+                      '--shard-er':  shard.er,
+                      opacity: shardPhase === 'hidden' ? 0 : undefined,
+                    }}
+                  />
+                );
+              })}
+
+              {/* Content */}
+              <div
+                className={`glass-content ${contentVisible ? 'visible-content' : 'hidden-content'}`}
+                style={{ padding: '2rem 2.5rem' }}
+              >
+                <h3 style={{
+                  margin: 0,
+                  color: '#f7f7f7',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                  fontSize: '1.05rem',
+                  fontWeight: 800,
+                }}>
+                  Who I Am
+                </h3>
+                <p style={{ margin: 0, color: '#b2b2b2', lineHeight: 1.75, fontSize: '0.98rem' }}>
+                  I am a 4th year student at the{' '}
+                  <span className="gold-text" style={{ fontWeight: 600 }}>University of Santo Tomas</span>{' '}
+                  with a passion for technology and adventure. I started my programming journey with
+                  Java and have since expanded to PHP, React, Node.js, SQL, and ASP.
+                </p>
+                <p style={{ margin: 0, color: '#b2b2b2', lineHeight: 1.75, fontSize: '0.98rem' }}>
+                  I am a passionate web developer with a knack for creating clean, user-friendly,
+                  and responsive websites. When I'm not coding, you can find me exploring new hiking
+                  trails, dabbling in digital art, or building custom keyboards.
+                </p>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', margin: '0.5rem 0' }}>
+                  {[{ num: '3', label: 'Years of Coding' }, { num: '6', label: 'Projects Completed' }].map(({ num, label }) => (
+                    <div key={label} style={{
+                      padding: '1rem',
+                      borderRadius: '16px',
+                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid rgba(255,255,255,0.07)',
+                    }}>
+                      <span style={{ display: 'block', fontSize: '2rem', fontWeight: 900, color: '#e10600', lineHeight: 1 }}>
+                        {num}
+                      </span>
+                      <span style={{ display: 'block', fontSize: '0.85rem', color: '#b2b2b2', marginTop: '0.4rem' }}>
+                        {label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <a
+                  href="#contact"
+                  className="btn btn-primary"
+                  style={{ alignSelf: 'flex-start' }}
+                  onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
+                >
+                  Let's Connect
+                </a>
               </div>
             </div>
-            <a
-              href="#contact"
-              className="btn btn-primary"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection('contact');
-              }}
-            >
-              Let's Connect
-            </a>
           </div>
         </div>
       </div>

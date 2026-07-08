@@ -6,6 +6,7 @@ import MyProjects from './components/MyProjects';
 import ContactMe from './components/ContactMe';
 import LoadingScreen from './components/LoadingScreen';
 import CursorTracer from './components/CursorTracer';
+import LazySection from './components/LazySection';
 import './App.css';
 
 function App() {
@@ -20,13 +21,25 @@ function App() {
   return (
     <div className="App">
       {loading && <LoadingScreen onDone={handleLoadingDone} />}
+      <CursorTracer active={!loading} />
       <main className={`main-content ${contentVisible ? 'visible' : ''}`}>
-        <CursorTracer active={!loading} />
         <Home />
-        <AboutMe />
-        <MySkills />
-        <MyProjects />
-        <ContactMe />
+
+        <LazySection rootMargin="300px 0px">
+          <AboutMe />
+        </LazySection>
+
+        <LazySection rootMargin="400px 0px">
+          <MySkills />
+        </LazySection>
+
+        <LazySection rootMargin="400px 0px">
+          <MyProjects />
+        </LazySection>
+
+        <LazySection rootMargin="400px 0px">
+          <ContactMe />
+        </LazySection>
       </main>
     </div>
   );

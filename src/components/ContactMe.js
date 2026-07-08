@@ -1,50 +1,100 @@
 import { EnvelopeFill, Facebook, Github, TelephoneFill } from 'react-bootstrap-icons';
 
+const sectionStyle = {
+  position: 'relative',
+  zIndex: 1,
+  padding: '7rem 0',
+};
+
+const containerStyle = {
+  width: 'min(1200px, calc(100% - 3rem))',
+  margin: '0 auto',
+};
+
+const cardStyle = {
+  background: 'rgba(14,14,14,0.88)',
+  border: '1px solid rgba(255,255,255,0.08)',
+  boxShadow: '0 24px 90px rgba(0,0,0,0.6)',
+  backdropFilter: 'blur(12px)',
+  borderRadius: '18px',
+  padding: '2rem',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+  position: 'relative',
+  overflow: 'hidden',
+};
+
+const iconBoxStyle = {
+  width: '3rem',
+  height: '3rem',
+  borderRadius: '50%',
+  background: 'rgba(225,6,0,0.14)',
+  display: 'grid',
+  placeItems: 'center',
+  color: '#e10600',
+  fontSize: '1.25rem',
+  flexShrink: 0,
+};
+
 function ContactMe() {
   const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <>
-      <section id="contact" className="contact">
-        <div className="container">
-          <h2 className="section-title">
+      {/* ── Contact Section ── */}
+      <section id="contact" style={sectionStyle}>
+        <div style={containerStyle}>
+
+          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.4rem)', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 0.5rem', color: '#f7f7f7' }}>
             Contact <span className="gold-text">Me</span>
           </h2>
-          <p className="section-subtitle">
+          <p style={{ textAlign: 'center', color: '#b2b2b2', maxWidth: '720px', margin: '0 auto 3.5rem', lineHeight: 1.6 }}>
             Let's connect! Feel free to reach out for opportunities, collaborations, or just a chat.
           </p>
-          <div className="contact-content">
-            <div className="contact-info">
-              <div className="contact-card">
-                <div className="contact-icon"><EnvelopeFill /></div>
-                <h3>Email</h3>
-                <p><br />angelojacob.valeros.cics@ust.edu.ph</p>
+
+          {/* Two-column: contact info | social */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.55fr] gap-6 items-start">
+
+            {/* Left – contact cards stacked */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              {/* Email */}
+              <div style={cardStyle}>
+                <div style={iconBoxStyle}><EnvelopeFill /></div>
+                <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '0.95rem', fontWeight: 800 }}>Email</h3>
+                <p style={{ margin: 0, color: '#b2b2b2', fontSize: '0.9rem', wordBreak: 'break-all' }}>
+                  angelojacob.valeros.cics@ust.edu.ph
+                </p>
                 <a
                   href="https://mail.google.com/mail/?view=cm&fs=1&to=angelojacob.valeros.cics@ust.edu.ph&su=Inquiry&body=Hello%2C%20we%27ve%20had%20a%20chance%20to%20explore%20your%20internship%20portfolio%20and%20would%20love%20to%20connect%20with%20you%20to%20talk%20more%20about%20your%20work%20and%20potential%20opportunities."
                   className="contact-link"
+                  style={{ alignSelf: 'flex-start' }}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   Send an Email
                 </a>
               </div>
-              <div className="contact-card">
-                <div className="contact-icon"><TelephoneFill /></div>
-                <h3>Phone</h3>
-                <p>(63) 995 498 4281</p>
-                <a href="tel:+639954984281" className="contact-link">
+
+              {/* Phone */}
+              <div style={cardStyle}>
+                <div style={iconBoxStyle}><TelephoneFill /></div>
+                <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '0.95rem', fontWeight: 800 }}>Phone</h3>
+                <p style={{ margin: 0, color: '#b2b2b2', fontSize: '0.9rem' }}>(63) 995 498 4281</p>
+                <a href="tel:+639954984281" className="contact-link" style={{ alignSelf: 'flex-start' }}>
                   Call Me
                 </a>
               </div>
             </div>
-            <div className="social-links">
-              <h3>Find Me On</h3>
-              <div className="social-icons">
+
+            {/* Right – socials card */}
+            <div style={cardStyle}>
+              <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '0.95rem', fontWeight: 800 }}>
+                Find Me On
+              </h3>
+              <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
                 <a href="https://github.com/AJacobV" target="_blank" rel="noopener noreferrer" className="social-icon" title="GitHub">
                   <Github />
                 </a>
@@ -53,25 +103,27 @@ function ContactMe() {
                 </a>
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-content">
-            <p className="footer-logo">
+      {/* ── Footer ── */}
+      <footer style={{ position: 'relative', zIndex: 1, paddingBottom: '4rem' }}>
+        <div style={containerStyle}>
+          <div style={{ textAlign: 'center', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+            <p style={{ margin: '0 0 0.25rem', fontSize: '1.1rem', fontWeight: 800 }}>
               <span className="gold-text">Angelo Jacob A. Valeros</span>
             </p>
-            <p className="footer-text">Web Developer & Designer</p>
-            <div className="footer-links">
-              <button onClick={() => scrollToSection('home')}>Home</button>
-              <button onClick={() => scrollToSection('about')}>About</button>
-              <button onClick={() => scrollToSection('skills')}>Skills</button>
-              <button onClick={() => scrollToSection('projects')}>Projects</button>
-              <button onClick={() => scrollToSection('contact')}>Contact</button>
+            <p style={{ margin: '0 0 1.5rem', fontSize: '0.9rem', color: '#b2b2b2' }}>Web Developer &amp; Designer</p>
+            <div className="footer-links" style={{ marginBottom: '1.5rem' }}>
+              {['home', 'about', 'skills', 'projects', 'contact'].map((s) => (
+                <button key={s} onClick={() => scrollToSection(s)}>
+                  {s.charAt(0).toUpperCase() + s.slice(1)}
+                </button>
+              ))}
             </div>
-            <p className="copyright">
+            <p style={{ margin: 0, fontSize: '0.85rem', color: '#b2b2b2' }}>
               © 2025 Angelo Jacob A. Valeros. All Rights Reserved.
             </p>
           </div>
