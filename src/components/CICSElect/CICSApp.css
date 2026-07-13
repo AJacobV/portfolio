@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+.cics-replica-container {
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #F4F4FC;
+}
+.cics-replica-container a {
+    text-decoration: none;
+    cursor: pointer;
+}
+.cics-replica-container * {
+    box-sizing: border-box;
+}

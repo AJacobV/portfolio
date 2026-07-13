@@ -1,0 +1,200 @@
+.cics-hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+    background-color: #ffffff;
+    max-width: 1200px;
+    height: 250px;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+.cics-hero-text-content {
+    flex: 1;
+    padding-right: 20px;
+}
+.cics-hero-text-content h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #800000;
+}
+.cics-hero-text-content p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #555;
+}
+.cics-hero-button {
+    background-color: #800000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.cics-hero-button:hover {
+    background-color: #A84B2F;
+}
+.cics-hero-image-container {
+    position: relative;
+    width: 45%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cics-hero-image {
+    position: absolute;
+    max-width: 100%;
+    max-height: 150px;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+.cics-hero-image.active {
+    opacity: 1;
+}
+
+/* Steps Section */
+.cics-body-content {
+    padding: 3em 0;
+    background-color: #3A0603;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+.cics-step-container, .cics-step-containertwo, .cics-step-containerthree {
+    position: relative;
+    color: white;
+    display: flex;
+    justify-content: center;
+    width: 300px;
+}
+.cics-step-container::before, .cics-step-containertwo::before, .cics-step-containerthree::before {
+    content: "";
+    background-color: #8E403A;
+    position: absolute;
+    border-radius: 50%;
+    width: 6rem;
+    height: 6rem;
+    z-index: 0;
+}
+.cics-step-container::before { top: -20px; right: 20px; }
+.cics-step-containertwo::before { bottom: -20px; left: 20px; }
+.cics-step-containerthree::before { top: 30%; right: -20px; }
+
+.cics-box {
+    width: 100%;
+    padding: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.074);
+    border: 1px solid rgba(255, 255, 255, 0.222);
+    backdrop-filter: blur(20px);
+    border-radius: 0.7rem;
+    transition: all ease 0.3s;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+.cics-box:hover {
+    box-shadow: 0px 0px 20px 1px #ffbb763f;
+    border: 1px solid rgba(255, 255, 255, 0.454);
+}
+.cics-step-left {
+    text-align: left;
+    margin: 0;
+    font-size: 0.8rem;
+    color: #ccc;
+}
+.cics-step-title {
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    margin: 10px 0;
+}
+.cics-step-desc {
+    font-size: 0.9rem;
+    text-align: center;
+    color: #ddd;
+    flex-grow: 1;
+}
+.cics-step-btn {
+    padding: 0.5rem 1rem;
+    color: #ffffff;
+    background-color: transparent;
+    border: 1px solid #8E403A;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: 15px;
+}
+.cics-step-btn:hover {
+    background-color: #8E403A;
+}
+
+/* Quote */
+.cics-body-secondcontent {
+    background-color: #977b7f;
+    padding: 5em 20px;
+    text-align: center;
+}
+.cics-quote-inner {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.cics-blkQuote {
+    font-size: 28px;
+    color: maroon;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.cics-blkDescription {
+    color: white;
+    font-size: 16px;
+}
+
+/* Features */
+.cics-body-thirdcontent {
+    background-color: #F1F3FA;
+    padding: 5em 20px;
+    text-align: center;
+}
+.cics-features-title {
+    font-size: 2.5rem;
+    color: #000000;
+    margin-bottom: 10px;
+}
+.cics-features-description {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    color: #800000;
+}
+.cics-features-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.cics-feature {
+    flex: 1;
+    min-width: 250px;
+    background: transparent;
+    padding: 30px 20px;
+}
+.cics-feature-icon img {
+    height: 200px;
+    margin-bottom: 20px;
+}
+.cics-feature-title {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+.cics-feature-desc {
+    font-size: 0.95rem;
+    color: #666;
+}

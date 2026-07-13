@@ -9,6 +9,7 @@ import LoadingScreen from './components/LoadingScreen';
 import CursorTracer from './components/CursorTracer';
 import LazySection from './components/LazySection';
 import WizApp from './components/wiz/WizApp';
+import CICSApp from './components/CICSElect/CICSApp';
 import './App.css';
 
 function PortfolioMain() {
@@ -53,6 +54,7 @@ function App() {
       <Routes>
         <Route path="/" element={<PortfolioMain />} />
         <Route path="/wiz/*" element={<WizApp />} />
+        <Route path="/cicselect/*" element={<CICSApp />} />
       </Routes>
     </BrowserRouter>
   );

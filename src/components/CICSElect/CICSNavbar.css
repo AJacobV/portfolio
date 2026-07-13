@@ -1,0 +1,65 @@
+.cics-wave-container {
+    position: relative;
+    width: 100%;
+    background-color: transparent;
+}
+.cics-wave-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.cics-navbar-content {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+}
+.cics-logo a {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.cics-nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+.cics-nav-links a {
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.cics-nav-links a:hover {
+    color: #ffbb76;
+}
+.cics-auth-buttons {
+    display: flex;
+    gap: 1rem;
+}
+.cics-btn-login, .cics-btn-register {
+    padding: 0.5rem 1.5rem;
+    border: 2px solid white;
+    border-radius: 20px;
+    background: transparent;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.cics-btn-register {
+    background: white;
+    color: #800000;
+}
+.cics-btn-login:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+.cics-btn-register:hover {
+    background: #f0f0f0;
+}

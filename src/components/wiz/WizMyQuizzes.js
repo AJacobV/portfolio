@@ -94,7 +94,7 @@ function WizMyQuizzes() {
                 </div>
               </div>
               <div className="wiz-yq-btn-cont">
-                <button className="cta-btn" role="button" onClick={showCreateQuizDemoAlert}>Start Creating</button>
+                <button className="cta-btn" onClick={showCreateQuizDemoAlert}>Start Creating</button>
               </div>
             </>
           )}

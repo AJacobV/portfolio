@@ -1,0 +1,254 @@
+/* Modern 3D Flip & Glassmorphism Design for CICSelect */
+
+.cics-login-wrapper3d {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #0f0c29;
+    overflow: hidden;
+    perspective: 1200px; /* Required for 3D effect */
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Immersive Background */
+.cics-bg-mesh {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, #1f0404, #360101, #0f0c29);
+    background-size: 400% 400%;
+    animation: gradientFlow 15s ease infinite;
+    z-index: 1;
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.cics-bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 2;
+    opacity: 0.6;
+}
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: #800000;
+    top: -100px;
+    left: -100px;
+    animation: floatOrb 10s ease-in-out infinite alternate;
+}
+.orb-2 {
+    width: 300px;
+    height: 300px;
+    background: #ff5e00;
+    bottom: -50px;
+    right: -50px;
+    animation: floatOrb 12s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes floatOrb {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(50px) scale(1.1); }
+}
+
+.cics-nav-back3d {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    z-index: 10;
+}
+.cics-nav-back3d a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+.cics-nav-back3d a:hover {
+    color: #fff;
+}
+
+/* 3D Flip Container */
+.cics-flip-container {
+    width: 500px;
+    height: 700px;
+    z-index: 10;
+    perspective: 1200px;
+}
+
+.cics-flipper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform-style: preserve-3d;
+}
+
+.cics-flip-container.flipped .cics-flipper {
+    transform: rotateY(180deg);
+}
+
+.cics-card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    color: #fff;
+}
+
+.cics-back {
+    transform: rotateY(180deg);
+}
+
+/* Content Styling */
+.cics-card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.cics-card-content h1 {
+    font-size: 2.2rem;
+    margin: 0;
+    font-weight: 700;
+}
+.cics-subtitle {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 5px;
+    margin-bottom: 30px;
+}
+.cics-login-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ff9d76;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+/* Modern Floating Label Inputs */
+.cics-modern-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+.cics-input-group {
+    position: relative;
+}
+
+.cics-input-group input {
+    width: 100%;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.cics-input-group input:focus {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: #ff9d76;
+    box-shadow: 0 0 15px rgba(255, 157, 118, 0.2);
+}
+
+.cics-input-group label {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+/* Floating effect */
+.cics-input-group input:focus + label,
+.cics-input-group input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 15px;
+    font-size: 0.8rem;
+    color: #ff9d76;
+    background: #250912; /* Matches a slice of background to mask the border */
+    padding: 0 5px;
+    border-radius: 4px;
+}
+
+.cics-submit-btn {
+    margin-top: 10px;
+    padding: 15px;
+    background: linear-gradient(135deg, #800000, #b01010);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 10px 20px rgba(128, 0, 0, 0.3);
+}
+
+.cics-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px rgba(128, 0, 0, 0.4);
+}
+
+.cics-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 25px;
+    font-size: 0.9rem;
+}
+
+.cics-card-footer p {
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+}
+
+.cics-switch-btn {
+    background: transparent;
+    border: none;
+    color: #ff9d76;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0;
+    position: relative;
+}
+
+.cics-switch-btn::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #ff9d76;
+    transition: width 0.3s ease;
+}
+
+.cics-switch-btn:hover::after {
+    width: 100%;
+}

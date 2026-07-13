@@ -1,0 +1,59 @@
+.cics-homepage-footer {
+    width: 100%;
+    margin-top: auto;
+}
+.cics-wave-containerfooter {
+    width: 100%;
+    background-color: transparent;
+    margin-bottom: -10px; /* To prevent gap between wave and footer content */
+}
+.cics-footer-wave {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.cics-footer-content {
+    background-color: #780D1D;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 5%;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.cics-footer-logo {
+    font-size: 2rem;
+    font-weight: bold;
+}
+.cics-footer-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+.cics-footer-links a {
+    color: white;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+.cics-footer-links a:hover {
+    color: #ffbb76;
+}
+.cics-social-media {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+}
+.cics-social-media a {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s;
+}
+.cics-social-media a:hover {
+    transform: scale(1.1);
+}
