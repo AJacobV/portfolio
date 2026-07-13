@@ -51,7 +51,7 @@
     cursor: pointer;
 }
 
-.wiz-login-container button.hidden {
+.wiz-login-container button.toggle-ghost-btn {
     background-color: transparent;
     border-color: #fff;
 }

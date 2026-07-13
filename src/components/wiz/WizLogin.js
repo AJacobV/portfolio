@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './WizLogin.css';
 
@@ -9,6 +9,12 @@ function WizLogin() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
+  useEffect(() => {
+    if (location.state?.isSignup !== undefined) {
+      setIsActive(location.state.isSignup);
+    }
+  }, [location.state]);
   
   const handleAuth = (e) => {
     e.preventDefault();
@@ -86,12 +92,12 @@ function WizLogin() {
             <div className="toggle-panel toggle-left">
               <h1>Welcome Back!</h1>
               <p>Enter your personal details to use all of site features</p>
-              <button className="hidden" onClick={() => setIsActive(false)}>Sign In</button>
+              <button type="button" className="toggle-ghost-btn" onClick={() => setIsActive(false)}>Sign In</button>
             </div>
             <div className="toggle-panel toggle-right">
               <h1>Hello, Classmate!</h1>
               <p>No account yet? Register with your personal details to use all of site features</p>
-              <button className="hidden" onClick={() => setIsActive(true)}>Sign Up</button>
+              <button type="button" className="toggle-ghost-btn" onClick={() => setIsActive(true)}>Sign Up</button>
             </div>
           </div>
         </div>
