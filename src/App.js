@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import AboutMe from './components/AboutMe';
 import MySkills from './components/MySkills';
@@ -7,9 +8,10 @@ import ContactMe from './components/ContactMe';
 import LoadingScreen from './components/LoadingScreen';
 import CursorTracer from './components/CursorTracer';
 import LazySection from './components/LazySection';
+import WizApp from './components/wiz/WizApp';
 import './App.css';
 
-function App() {
+function PortfolioMain() {
   const [loading, setLoading] = useState(true);
   const [contentVisible, setContentVisible] = useState(false);
 
@@ -42,6 +44,17 @@ function App() {
         </LazySection>
       </main>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<PortfolioMain />} />
+        <Route path="/wiz/*" element={<WizApp />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

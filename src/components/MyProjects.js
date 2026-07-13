@@ -142,8 +142,9 @@ function ProjectCard({ project, index }) {
 
       {/* Text content */}
       <div style={{ padding: '1.25rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', flex: 1, position: 'relative' }}>
-        {isHovered && (
+        {isHovered && project.title !== 'JV TechHub' && (
           <div
+            onClick={project.liveLink ? () => window.open(project.liveLink, '_blank', 'noopener noreferrer') : undefined}
             style={{
               position: 'absolute',
               inset: 0,
@@ -162,9 +163,8 @@ function ProjectCard({ project, index }) {
               zIndex: 2,
               cursor: project.liveLink ? 'pointer' : 'default',
             }}
-            {...(project.liveLink ? { onClick: () => window.open(project.liveLink, '_blank', 'noopener noreferrer') } : {})}
           >
-            {project.liveLink ? 'View Live Demo' : 'View Project'}
+            {project.liveLabel || (project.liveLink ? 'View Live Demo' : 'View Project')}
           </div>
         )}
         <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '0.95rem', fontWeight: 800 }}>
@@ -264,9 +264,11 @@ function MyProjects() {
     {
       title: 'WIZ',
       description: 'An online study platform where students can test their knowledge based on content they input.',
-      tech: ['PHP', 'MySQL'],
+      tech: ['React (Replica)'],
       icon: <BookFill />,
       images: ['WizLogin.jpeg', 'WizHome.jpeg', 'WizContent.jpeg'],
+      liveLink: '/wiz',
+      liveLabel: 'View Replica',
       tags: ['Course Project', 'Demo'],
     },
     {

@@ -1,0 +1,880 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+.wiz-replica-container * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.wiz-replica-container {
+    background-color: #c9d6ff;
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    color: #333;
+    display: flow-root;
+    min-height: 100vh;
+}
+
+.wiz-replica-container nav {
+    background-color: #fff;
+    padding: 10px 50px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wiz-replica-container .wiz-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 1000; 
+    backdrop-filter: blur(10px);
+}
+
+.wiz-replica-container .wiz-logo {
+    width: 150px;
+    height: auto;
+}
+
+.wiz-replica-container .wiz-footer {
+    background-color: #222;
+    color: #fff;
+    padding: 60px 0 20px 0;
+    width: 100%;
+}
+
+.wiz-replica-container .wiz-footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.wiz-replica-container .wiz-footer-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.wiz-replica-container .wiz-footer-col {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+    text-align: left;
+}
+
+.wiz-replica-container .wiz-brand-col {
+    flex: 2;
+}
+
+.wiz-replica-container .wiz-footer-logo {
+    width: 150px;
+    margin-bottom: 15px;
+}
+
+.wiz-replica-container .wiz-footer-tagline {
+    color: #aaa;
+    font-size: 14px;
+    padding: 0;
+}
+
+.wiz-replica-container .wiz-footer-col h4 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.wiz-replica-container .wiz-footer-item {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.wiz-replica-container .wiz-footer-icon {
+    margin-right: 10px;
+    color: #522EA8;
+}
+
+.wiz-replica-container .wiz-footer-hr {
+    margin: 40px 0 20px 0;
+    width: 100%;
+    border-color: #444;
+}
+
+.wiz-replica-container .wiz-footer-copyright {
+    width: 100%;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    padding: 0;
+}
+
+.wiz-replica-container .wiz-abt-us {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.wiz-replica-container .wiz-abt-us:hover {
+    color: #522EA8;
+}
+
+.wiz-replica-container .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.wiz-replica-container .wiz-navbar ul {
+    list-style-type: none;
+    margin: 0;
+    margin-left: 50px;
+    padding: 0;
+    display: flex;
+}
+
+.wiz-replica-container .wiz-navbar li {
+    display: inline-block;
+    padding: 10px 20px;
+}
+
+.wiz-replica-container .wiz-navbar li:hover {
+    background-color: #ccbdee;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+}
+
+.wiz-replica-container a {
+    text-decoration: none;
+    color: #512da8;
+}
+
+.wiz-replica-container .logo:hover {
+    color: #512da8;
+}
+
+.wiz-replica-container a:hover {
+    color: #512da8;
+}
+
+.wiz-replica-container .login-btn {
+    background-color: transparent;
+    border: 2px solid;
+    border-color: #512da8;
+    border-radius: 15px;
+    box-sizing: border-box;
+    color: #512da8;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    min-height: 40px;
+    min-width: 0;
+    padding: 10px 20px;
+    text-align: center;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    touch-action: manipulation;
+    width: auto;
+    will-change: transform;
+    margin-left: auto;
+}
+
+.wiz-replica-container .login-btn:disabled {
+    pointer-events: none;
+}
+
+.wiz-replica-container .login-btn:hover {
+    color: #fff;
+    background-color: #512da8;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+}
+
+.wiz-replica-container .login-btn:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.wiz-replica-container .qt-1-container {
+    margin: auto;
+    margin-top: 150px;
+    padding: 50px 50px;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    height: 80dvh;
+}
+
+.wiz-replica-container .qt-1-content {
+    flex: 1;
+    margin: auto;
+    padding: 20px;
+    margin-bottom: 20dvh;
+    animation: slideInFromLeft 1s ease forwards;
+}
+
+.wiz-replica-container .qt-1-content1 {
+    font-weight: 400;
+    font-size: large;
+    padding: 0px;
+}
+
+.wiz-replica-container .qt-1-content2 {
+    font-weight: bold;
+    font-size: xx-large;
+    padding: 20px 0px;
+}
+
+.wiz-replica-container .qt-1-content3 {
+    font-size: medium;
+    padding-bottom: 50px;
+}
+
+.wiz-replica-container .qt-1-content-img img {
+    /* Animation removed to prevent conflicts with parent container */
+}
+
+.wiz-replica-container .qt-1-content-img {
+    flex: 1;
+    padding-left: 20px;
+}
+
+.wiz-replica-container .qt-2-container {
+    background-color: #CCBDEE;
+    margin: auto;
+}
+
+.wiz-replica-container .qt-2-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.wiz-replica-container .qt-2-content-1, .wiz-replica-container .qt-2-content-2 {
+    margin: auto;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.wiz-replica-container .qt-2-content-1 {
+    margin-top: 7dvh;
+    font-weight: bold;
+    font-size: xxx-large;
+    padding: 20px 0px;
+}
+
+.wiz-replica-container .qt-2-qtype-1 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.wiz-replica-container .qt-2-qtype-1-img {
+    flex: 1;
+    margin-top: 6dvh;
+    margin-right: 20px;
+    margin-left: 8dvw;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.wiz-replica-container .qt-2-qtype-1-title {
+    font-weight: bold;
+    text-align: left;
+    font-size: xx-large;
+    padding: 30px 0px;
+}
+
+.wiz-replica-container .qt-2-qtype-1-desc {
+    margin-top: 5px;
+    padding-right: 40px;
+    text-align: justify;  
+}
+
+.wiz-replica-container .qt-2-qtype-1-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24dvh;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.wiz-replica-container .qt-2-qtype-2 {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    text-align: center;
+}
+
+.wiz-replica-container .qt-2-qtype-2-img {
+    flex: 1;
+    margin-top: 9dvh;
+    margin-left: 20px;
+    margin-right: 8dvw;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.wiz-replica-container .qt-2-qtype-2-title {
+    font-weight: bold;
+    text-align: right;
+    font-size: xx-large;
+    padding: 30px 0px;
+}
+
+.wiz-replica-container .qt-2-qtype-2-desc {
+    margin-top: 5px;
+    text-align: right;
+    padding-left: 40px;
+}
+
+.wiz-replica-container .qt-2-qtype-2-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24dvh;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.wiz-replica-container .qt-3-container {
+    height: 5dvh;
+    margin: auto;
+}
+
+.wiz-replica-container .qt-3-img-container {
+    display: flex;
+    margin: auto;
+    margin-top: 10dvh;
+    justify-content: center;
+}
+
+.wiz-replica-container .qt-3-img-3, .wiz-replica-container .qt-3-img-2, .wiz-replica-container .qt-3-img-1 {
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.wiz-replica-container .qt-3-content {
+    text-align: center;
+}
+
+.wiz-replica-container .qt-3-content-1, .wiz-replica-container .qt-3-content-2 {
+    margin: auto;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.wiz-replica-container .qt-3-content-1 {
+    margin-top: 7dvh;
+    font-weight: bold;
+    font-size: xx-large;
+    padding: 20px 0px;
+    
+}
+
+.wiz-replica-container .yq-container {
+    margin: auto;
+    margin-top: 8dvh;
+    height: 85dvh;
+}
+
+.wiz-replica-container .yq-content-1 {
+    padding: 0px 80px;
+    margin-top: 15dvh;
+}
+
+.wiz-replica-container .yq-no-cont {
+    margin: auto;
+    padding: 50px;
+    justify-content: center;
+}
+
+.wiz-replica-container .yq-no-1 {
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 80px;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+    width: 100%;
+    font-size: x-large;    
+    font-weight: bold;
+    color: #512da8;
+}
+
+.wiz-replica-container .yq-3-container {
+    height: 90dvh;
+    margin: auto;
+    
+}
+
+.wiz-replica-container .yq-3-img-container {
+    display: flex;
+    margin: auto;
+    margin-top: 10dvh;
+    justify-content: center;
+}
+
+.wiz-replica-container .yq-3-content {
+    text-align: left;
+    padding: 0px 80px;
+    margin-top: 15dvh;
+}
+
+.wiz-replica-container .yq-3-content-1, .wiz-replica-container .yq-3-content-2 {
+    margin: auto;
+    padding: 10px;
+    color: #512da8;
+}
+
+.wiz-replica-container .yq-3-content-1 {
+    margin-top: 7dvh;
+    font-weight: bold;
+    font-size: xx-large;
+    padding: 20px 0px;
+    color: #512da8;
+}
+
+.wiz-replica-container .search-container {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    border-color: #512da8;
+}
+
+.wiz-replica-container .search-container input[type="text"] {
+    padding: 10px;
+    border-radius: 50px;
+    border: 3px solid #CCBDEE;
+    background-color: #F7F7F7;
+    width: 30dvw;
+    margin: 0 20px;
+}
+
+.wiz-replica-container .search-container-logged {
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+
+.wiz-replica-container .search-container-logged input[type="text"] {
+    padding: 10px;
+    border-radius: 50px;
+    border: 3px solid #CCBDEE;
+    background-color: #F7F7F7;
+    width: 30dvw;
+    margin: 0 20px;
+}
+
+.wiz-replica-container .yq-btn-cont {
+    text-align: center;
+}
+
+.wiz-replica-container .signup-btn {
+    padding: 10px 20px;
+}
+
+.wiz-replica-container .signup-btn:hover {
+    background-color: #ccbdee;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+}
+
+.wiz-replica-container .cta-btn {
+    background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
+    border-radius: 50px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-family: "Inter UI", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    height: 4rem;
+    padding: 0 1.6rem;
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+    transition: all .5s;
+    touch-action: manipulation;
+}
+
+.wiz-replica-container .cta-btn:hover {
+    box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+    transition-duration: .1s;
+}
+
+
+@media (min-width: 768px) {
+    .cta-btn {
+        padding: 0 2.6rem;
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(40%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-40%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromBottom {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.wiz-demo-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #512da8;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2000;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+}
+
+.wiz-demo-banner-content {
+    flex: 1;
+    text-align: center;
+}
+
+.wiz-demo-banner-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    margin-left: 20px;
+    padding: 0 10px;
+    line-height: 1;
+}
+
+.wiz-demo-banner-close:hover {
+    color: #ccbdee;
+}
+
+/* WizSubjects specific styles */
+.wiz-replica-container .qt-3-container {
+    background-color: #CCBDEE;
+    margin: auto;
+    padding: 20px;
+}
+
+.wiz-replica-container .qt-3-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.wiz-replica-container .wiz-carousel-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wiz-replica-container .wiz-carousel-content-1 {
+    font-weight: bold;
+    font-size: xx-large;
+    padding: 20px 0;
+}
+
+.wiz-replica-container .wiz-carousel-img-container {
+    overflow: hidden;
+    margin-top: 50px;
+    max-width: 100%;
+}
+
+.wiz-replica-container .wiz-carousel-wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.wiz-replica-container .wiz-carousel-slide {
+    display: flex;
+    width: 100%;
+}
+
+.wiz-replica-container .wiz-carousel-img {
+    margin: 0 10px;
+    flex: 0 0 auto;
+    width: 25%;
+    box-sizing: border-box;
+}
+
+.wiz-replica-container .img-wrapper {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+.wiz-replica-container .img-text {
+    display: block;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+}
+
+.wiz-replica-container .wiz-carousel-img img {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #000;
+    box-sizing: border-box;
+}
+
+.wiz-replica-container .navigation-buttons {
+    margin-top: 20px;
+}
+
+.wiz-replica-container .navigation-buttons button {
+    margin: 0 10px;
+    padding: 8px 16px;
+    background-color: transparent;
+    border: 1px solid #aaa;
+    border-radius: 20px;
+    color: #555;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.wiz-replica-container .navigation-buttons button:hover {
+    border-color: #512da8;
+    color: #512da8;
+    background-color: rgba(81, 45, 168, 0.05);
+}
+
+/* Quizzes specific styles */
+.wiz-replica-container .wiz-yq-container {
+    padding-top: 100px;
+    min-height: 80vh;
+}
+
+.wiz-replica-container .wiz-yq-content {
+    margin: auto;
+    width: 80%;
+}
+
+.wiz-replica-container .wiz-yq-content-1 {
+    margin-bottom: 20px;
+}
+
+.wiz-replica-container .wiz-quiz-container {
+    width: 95%;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: #ffff;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    overflow: hidden;
+}
+
+.wiz-replica-container .wiz-quiz-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+.wiz-replica-container .wiz-quiz-item {
+    padding: 20px 0;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wiz-replica-container .wiz-quiz-item:last-child {
+    border-bottom: none;
+}
+
+.wiz-replica-container .wiz-quiz-item span {
+    font-weight: bold;
+}
+
+.wiz-replica-container .wiz-btn-wrapper {
+    display: flex;
+}
+
+.wiz-replica-container .wiz-btn-custom {
+    background: #5E5DF0;
+    border-radius: 999px;
+    box-shadow: #5E5DF0 0 10px 20px -10px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: Inter, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    padding: 8px 18px;
+    width: fit-content;
+    border: 0;
+    transition: all 0.3s;
+}
+
+.wiz-replica-container .wiz-btn-custom:hover {
+    color: #fff;
+    background-color: #512da8;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+}
+
+.wiz-replica-container .wiz-btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.wiz-replica-container .wiz-btn-danger:hover {
+    opacity: 0.8;
+}
+
+.wiz-replica-container .wiz-center-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 80px;
+    border-radius: 15px;
+    background-color: #ffff;
+}
+
+.wiz-replica-container .wiz-yq-no-cont {
+    margin: 50px 0;
+}
+
+.wiz-replica-container .wiz-yq-btn-cont {
+    margin-top: 20px;
+}
+
+/* Modal specific styles */
+.wiz-replica-container .wiz-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    backdrop-filter: blur(5px);
+}
+
+.wiz-replica-container .wiz-modal-content {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: slideInFromTop 0.3s ease-out forwards;
+}
+
+.wiz-replica-container .wiz-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.wiz-replica-container .wiz-modal-close:hover {
+    color: #333;
+}
+
+.wiz-replica-container .wiz-modal-title {
+    color: #512da8;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+.wiz-replica-container .wiz-modal-message {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.wiz-replica-container .wiz-modal-actions {
+    display: flex;
+    justify-content: center;
+}
