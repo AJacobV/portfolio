@@ -3,7 +3,7 @@ import { useEffect, useState, useRef, useMemo } from 'react';
 const sectionStyle = {
   position: 'relative',
   zIndex: 1,
-  padding: '7rem 0',
+  padding: '4rem 0 7rem',
 };
 
 const containerStyle = {
@@ -59,7 +59,6 @@ function useSectionPhase() {
   const phaseRef = useRef('hidden');
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
-  const lastChangeAt = useRef(0);
 
   const applyPhase = (next) => {
     if (phaseRef.current === next) return;

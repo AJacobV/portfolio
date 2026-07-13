@@ -55,13 +55,13 @@ function useScrollVisibility() {
 
         setPhase((prev) => {
           if (scrollingDown) {
-            if (rect.top < vh * -0.4) {
-              return 'exiting';
-            }
             if (rect.top >= 0 && rect.top < vh * 0.6) {
               return 'entering';
             }
           } else {
+            if (rect.top > vh * 0.9) {
+              return 'exiting';
+            }
             if (rect.top >= 0 && rect.top < vh * 0.7) {
               return 'entering';
             }
@@ -141,14 +141,39 @@ function ProjectCard({ project, index }) {
       </div>
 
       {/* Text content */}
-      <div style={{ padding: '1.25rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', flex: 1 }}>
+      <div style={{ padding: '1.25rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', flex: 1, position: 'relative' }}>
+        {isHovered && (
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'rgba(0,0,0,0.55)',
+              color: '#fff',
+              fontSize: '1rem',
+              fontWeight: 700,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              borderRadius: 'inherit',
+              backdropFilter: 'blur(6px)',
+              zIndex: 2,
+              cursor: project.liveLink ? 'pointer' : 'default',
+            }}
+            {...(project.liveLink ? { onClick: () => window.open(project.liveLink, '_blank', 'noopener noreferrer') } : {})}
+          >
+            {project.liveLink ? 'View Live Demo' : 'View Project'}
+          </div>
+        )}
         <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '0.95rem', fontWeight: 800 }}>
           {project.title}
         </h3>
         <p style={{ margin: 0, color: '#b2b2b2', fontSize: '0.88rem', lineHeight: 1.65, flex: 1 }}>
           {project.description}
         </p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.5rem' }}>
           {project.tech.map((tech) => (
             <span
               key={tech}
@@ -259,7 +284,7 @@ function MyProjects() {
       icon: <Recycle />,
       images: ['USTreCycleLogin.jpeg', 'USTreCycleLoading.jpeg', 'USTreCycleHome.jpeg', 'USTreCycleAdmin.jpeg'],
       liveLink: 'https://ust-re-cycle.vercel.app',
-      tags: ['Demo', 'Course Project'],
+      tags: ['Course Project'],
     },
     {
       title: 'Falcon Eye',
