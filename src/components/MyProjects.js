@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
   BookFill,
   BoxSeamFill,
@@ -20,6 +20,73 @@ const cardStyle = {
   overflow: 'hidden',
   position: 'relative',
 };
+
+function useScrollVisibility() {
+  const ref = useRef(null);
+  const [phase, setPhase] = useState('hidden');
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
+          setPhase('entering');
+        }
+      },
+      { threshold: [0, 0.15, 0.5, 1], rootMargin: '0px' }
+    );
+
+    observer.observe(el);
+
+    const handleScroll = () => {
+      if (ticking.current) return;
+      ticking.current = true;
+
+      requestAnimationFrame(() => {
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const scrollY = window.scrollY;
+        const scrollingDown = scrollY > lastScrollY.current;
+        lastScrollY.current = scrollY;
+
+        setPhase((prev) => {
+          if (scrollingDown) {
+            if (rect.top < vh * -0.4) {
+              return 'exiting';
+            }
+            if (rect.top >= 0 && rect.top < vh * 0.6) {
+              return 'entering';
+            }
+          } else {
+            if (rect.top >= 0 && rect.top < vh * 0.7) {
+              return 'entering';
+            }
+            if (prev === 'exiting' && rect.top > vh * 0.3) {
+              return 'entering';
+            }
+          }
+          return prev;
+        });
+
+        ticking.current = false;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  return [ref, phase];
+}
 
 function ProjectCard({ project, index }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -81,9 +148,6 @@ function ProjectCard({ project, index }) {
         <p style={{ margin: 0, color: '#b2b2b2', fontSize: '0.88rem', lineHeight: 1.65, flex: 1 }}>
           {project.description}
         </p>
-        {project.courseProject && (
-          <p style={{ margin: 0, fontSize: '0.8rem', fontWeight: 700, color: '#fff' }}>📚 Course Project</p>
-        )}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
           {project.tech.map((tech) => (
             <span
@@ -103,11 +167,45 @@ function ProjectCard({ project, index }) {
             </span>
           ))}
         </div>
-        {(!project.courseProject && project.liveLink) || project.codeLink ? (
-          <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
-            {!project.courseProject && project.liveLink && (
-              <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="btn-link">Live</a>
+        {project.tags && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+            {project.liveLink && (
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '0.3rem 0.75rem',
+                  borderRadius: '999px',
+                  fontSize: '0.78rem',
+                  color: '#f7f7f7',
+                  background: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.15)',
+                }}
+              >
+                {project.liveLabel || 'Live'}
+              </span>
             )}
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '0.3rem 0.75rem',
+                  borderRadius: '999px',
+                  fontSize: '0.78rem',
+                  color: '#f7f7f7',
+                  background: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.15)',
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+        {project.codeLink ? (
+          <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
             {project.codeLink && (
               <a href={project.codeLink} target="_blank" rel="noopener noreferrer" className="btn-link">Code</a>
             )}
@@ -119,6 +217,16 @@ function ProjectCard({ project, index }) {
 }
 
 function MyProjects() {
+  const [headerRef, headerPhase] = useScrollVisibility();
+  const [cardsRef, cardsPhase] = useScrollVisibility();
+
+  const getAnimClass = (phase) =>
+    phase === 'entering'
+      ? 'scroll-fade entering'
+      : phase === 'exiting'
+      ? 'scroll-fade exiting'
+      : 'scroll-fade enter-up';
+
   const projects = [
     {
       title: 'LMD Dental Hub',
@@ -126,7 +234,7 @@ function MyProjects() {
       tech: ['ASP.NET', 'MySQL'],
       icon: <ClipboardHeartFill />,
       images: ['LMDLogin.jpeg', 'LMDHome.jpeg', 'LMDContent.jpeg'],
-      courseProject: true,
+      tags: ['Course Project', 'Demo'],
     },
     {
       title: 'WIZ',
@@ -134,7 +242,7 @@ function MyProjects() {
       tech: ['PHP', 'MySQL'],
       icon: <BookFill />,
       images: ['WizLogin.jpeg', 'WizHome.jpeg', 'WizContent.jpeg'],
-      courseProject: true,
+      tags: ['Course Project', 'Demo'],
     },
     {
       title: 'CICSelect',
@@ -142,7 +250,7 @@ function MyProjects() {
       tech: ['ASP.NET', 'MySQL'],
       icon: <FileEarmarkCheckFill />,
       images: ['CICSSelectHome.jpeg', 'CICSSelectContent.jpeg', 'CICSSelectAdmin.jpeg'],
-      courseProject: true,
+      tags: ['Course Project', 'Demo'],
     },
     {
       title: 'UST rE-CYCLE',
@@ -151,14 +259,17 @@ function MyProjects() {
       icon: <Recycle />,
       images: ['USTreCycleLogin.jpeg', 'USTreCycleLoading.jpeg', 'USTreCycleHome.jpeg', 'USTreCycleAdmin.jpeg'],
       liveLink: 'https://ust-re-cycle.vercel.app',
+      tags: ['Demo', 'Course Project'],
     },
     {
       title: 'Falcon Eye',
       description: 'A comprehensive school safety and incident management platform with real-time tracking and AI chatbot.',
-      tech: ['React', 'Node.js', 'Firebase', 'Socket.IO'],
+      tech: ['React', 'Node.js', 'NoSQL', 'Socket.IO'],
       icon: <EyeFill />,
       images: ['falconEye_dashboard.png', 'falconEye_heatmappage.png', 'falconEye_incidentreportpage.png', 'falconEye_lostandfountpage.png'],
       liveLink: 'https://falconeye.school',
+      liveLabel: 'Thesis Capstone',
+      tags: ['Demo', 'LIVE'],
     },
     {
       title: 'Amore Luxe',
@@ -167,6 +278,7 @@ function MyProjects() {
       icon: <BrushFill />,
       images: ['AmoreLux_title.jpg', 'AmoreLux_featuredfragances.jpg', 'AmoreLux_menscollection.jpg', 'AmoreLux_womenscollection.jpg'],
       liveLink: 'https://amoreluxe.vercel.app',
+      tags: [],
     },
     {
       title: 'JV TechHub',
@@ -175,6 +287,7 @@ function MyProjects() {
       icon: <BoxSeamFill />,
       images: ['JVTechHub_loginpage.png', 'JVTechHub_dashboard.png'],
       liveLink: 'https://jvtechhub2.onrender.com',
+      tags: ['Demo'],
     },
   ];
 
@@ -182,17 +295,21 @@ function MyProjects() {
     <section id="projects" style={{ position: 'relative', zIndex: 1, padding: '7rem 0' }}>
       <div style={{ width: 'min(1200px, calc(100% - 3rem))', margin: '0 auto' }}>
 
-        <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.4rem)', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 0.5rem', color: '#f7f7f7' }}>
-          My <span className="gold-text">Projects</span>
-        </h2>
-        <p style={{ textAlign: 'center', color: '#b2b2b2', maxWidth: '720px', margin: '0 auto 3.5rem', lineHeight: 1.6 }}>
-          A showcase of my work and the projects I've built throughout my journey
-        </p>
+        <div ref={headerRef} className={getAnimClass(headerPhase)}>
+          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.4rem)', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 0.5rem', color: '#f7f7f7' }}>
+            My <span className="gold-text">Projects</span>
+          </h2>
+          <p style={{ textAlign: 'center', color: '#b2b2b2', maxWidth: '720px', margin: '0 auto 3.5rem', lineHeight: 1.6 }}>
+            A showcase of my work and the projects I've built throughout my journey
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.title} project={project} index={index} />
-          ))}
+        <div ref={cardsRef} className={getAnimClass(cardsPhase)}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            {projects.map((project, index) => (
+              <ProjectCard key={project.title} project={project} index={index} />
+            ))}
+          </div>
         </div>
 
       </div>

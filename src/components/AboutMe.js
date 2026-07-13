@@ -63,9 +63,6 @@ function useSectionPhase() {
 
   const applyPhase = (next) => {
     if (phaseRef.current === next) return;
-    const now = Date.now();
-    if (now - lastChangeAt.current < 750) return; // cooldown — prevents rapid toggling
-    lastChangeAt.current = now;
     phaseRef.current = next;
     setPhase(next);
   };
@@ -89,25 +86,17 @@ function useSectionPhase() {
         if (rect.bottom <= 0 || rect.top >= vh) {
           applyPhase('hidden');
         }
-
         // ── Scroll-DOWN exit ──
-        // Section top has nearly left the top of the viewport
-        else if (scrollingDown && rect.top < vh * 0.06 && rect.bottom > 0) {
+        else if (scrollingDown && rect.bottom < vh * 0.25) {
           applyPhase('exiting');
         }
-
         // ── Scroll-UP exit ──
-        // Section is sliding back down off the bottom of the viewport.
-        // Mirrors the scroll-down exit threshold (55% coverage boundary).
-        else if (!scrollingDown && rect.top > vh * 0.55 && cur !== 'hidden') {
+        else if (!scrollingDown && rect.top > vh * 0.75 && cur !== 'hidden') {
           applyPhase('exiting');
         }
-
         // ── Enter (both directions) ──
-        // Section straddles the viewport center and covers enough of the screen.
-        // This condition fires when scrolling down into the section AND
-        // when scrolling back up into it from below.
-        else if (rect.top < vh * 0.45 && rect.bottom > vh * 0.5) {
+        // Widen the bounds so it triggers much earlier and feels snappy
+        else if (rect.top < vh * 0.85 && rect.bottom > vh * 0.15) {
           applyPhase('entering');
         }
 

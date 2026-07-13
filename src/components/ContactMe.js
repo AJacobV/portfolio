@@ -1,9 +1,10 @@
+import { useEffect, useState, useRef } from 'react';
 import { EnvelopeFill, Facebook, Github, TelephoneFill } from 'react-bootstrap-icons';
 
 const sectionStyle = {
   position: 'relative',
   zIndex: 1,
-  padding: '7rem 0',
+  padding: '4rem 0 7rem',
 };
 
 const containerStyle = {
@@ -37,7 +38,85 @@ const iconBoxStyle = {
   flexShrink: 0,
 };
 
+function useScrollVisibility() {
+  const ref = useRef(null);
+  const [phase, setPhase] = useState('hidden');
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
+          setPhase('entering');
+        }
+      },
+      { threshold: [0, 0.15, 0.5, 1], rootMargin: '0px' }
+    );
+
+    observer.observe(el);
+
+    const handleScroll = () => {
+      if (ticking.current) return;
+      ticking.current = true;
+
+      requestAnimationFrame(() => {
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const scrollY = window.scrollY;
+        const scrollingDown = scrollY > lastScrollY.current;
+        lastScrollY.current = scrollY;
+
+        setPhase((prev) => {
+          if (scrollingDown) {
+            if (rect.top < vh * -0.4) {
+              return 'exiting';
+            }
+            if (rect.top >= 0 && rect.top < vh * 0.6) {
+              return 'entering';
+            }
+          } else {
+            if (rect.top >= 0 && rect.top < vh * 0.7) {
+              return 'entering';
+            }
+            if (prev === 'exiting' && rect.top > vh * 0.3) {
+              return 'entering';
+            }
+          }
+          return prev;
+        });
+
+        ticking.current = false;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  return [ref, phase];
+}
+
 function ContactMe() {
+  const [headerRef, headerPhase] = useScrollVisibility();
+  const [contentRef, contentPhase] = useScrollVisibility();
+  const [footerRef, footerPhase] = useScrollVisibility();
+
+  const getAnimClass = (phase) =>
+    phase === 'entering'
+      ? 'scroll-fade entering'
+      : phase === 'exiting'
+      ? 'scroll-fade exiting'
+      : 'scroll-fade enter-up';
+
   const scrollToSection = (sectionId) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -48,15 +127,17 @@ function ContactMe() {
       <section id="contact" style={sectionStyle}>
         <div style={containerStyle}>
 
-          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.4rem)', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 0.5rem', color: '#f7f7f7' }}>
-            Contact <span className="gold-text">Me</span>
-          </h2>
-          <p style={{ textAlign: 'center', color: '#b2b2b2', maxWidth: '720px', margin: '0 auto 3.5rem', lineHeight: 1.6 }}>
-            Let's connect! Feel free to reach out for opportunities, collaborations, or just a chat.
-          </p>
+          <div ref={headerRef} className={getAnimClass(headerPhase)}>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.4rem)', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 0.5rem', color: '#f7f7f7' }}>
+              Contact <span className="gold-text">Me</span>
+            </h2>
+            <p style={{ textAlign: 'center', color: '#b2b2b2', maxWidth: '720px', margin: '0 auto 3.5rem', lineHeight: 1.6 }}>
+              Let's connect! Feel free to reach out for opportunities, collaborations, or just a chat.
+            </p>
+          </div>
 
           {/* Two-column: contact info | social */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.55fr] gap-6 items-start">
+          <div ref={contentRef} className={`grid grid-cols-1 lg:grid-cols-[1fr_0.55fr] gap-6 items-start ${getAnimClass(contentPhase)}`}>
 
             {/* Left – contact cards stacked */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -109,7 +190,7 @@ function ContactMe() {
       </section>
 
       {/* ── Footer ── */}
-      <footer style={{ position: 'relative', zIndex: 1, paddingBottom: '4rem' }}>
+      <footer ref={footerRef} className={getAnimClass(footerPhase)} style={{ position: 'relative', zIndex: 1, paddingBottom: '4rem' }}>
         <div style={containerStyle}>
           <div style={{ textAlign: 'center', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
             <p style={{ margin: '0 0 0.25rem', fontSize: '1.1rem', fontWeight: 800 }}>

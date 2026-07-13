@@ -40,7 +40,7 @@ function useScrollVisibility() {
 
         setPhase((prev) => {
           if (scrollingDown) {
-            if (rect.top < vh * 0.1 && rect.bottom > 0) {
+            if (rect.top < vh * -0.4) {
               return 'exiting';
             }
             if (rect.top >= 0 && rect.top < vh * 0.6) {

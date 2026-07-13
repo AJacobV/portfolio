@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
+const developerCodeString = `const developer = {\n  name: "Angelo Valeros",\n  university: "UST",\n  role: "Web Developer",\n  passion: "Adventure",\n  skills: ["React", "ASP.NET", "PHP"]\n};`;
+
 function Home() {
   const [navOpen, setNavOpen] = useState(false);
   const closeTimerRef = useRef(null);
@@ -8,6 +10,22 @@ function Home() {
   const [rotation, setRotation] = useState({ x: 8, y: -8 });
   const [isDragging, setIsDragging] = useState(false);
   const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 });
+
+  // Typewriter state
+  const [displayedCode, setDisplayedCode] = useState('');
+
+  useEffect(() => {
+    let index = 0;
+    const startDelay = setTimeout(() => {
+      const interval = setInterval(() => {
+        setDisplayedCode(developerCodeString.slice(0, index + 1));
+        index++;
+        if (index >= developerCodeString.length) clearInterval(interval);
+      }, 50); 
+      return () => clearInterval(interval);
+    }, 800); 
+    return () => clearTimeout(startDelay);
+  }, []);
 
   useEffect(() => () => {
     if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
@@ -150,8 +168,16 @@ function Home() {
                   <span className="dot yellow" />
                   <span className="dot green" />
                 </div>
-                <div className="code-content" style={{ padding: '1rem 1.25rem', pointerEvents: 'none' }}>
-                  <pre style={{ fontSize: '0.85rem', margin: 0, userSelect: 'none' }}>{`const developer = {\n  name: "Angelo Valeros",\n  university: "UST",\n  role: "Web Developer",\n  passion: "Adventure",\n  skills: ["React", "ASP.NET", "PHP"]\n};`}</pre>
+                <div className="code-content" style={{ padding: '1rem 1.25rem', pointerEvents: 'none', position: 'relative' }}>
+                  {/* Invisible placeholder to define the container's final size */}
+                  <pre style={{ visibility: 'hidden', fontSize: '0.85rem', margin: 0, userSelect: 'none' }}>
+                    {developerCodeString}
+                  </pre>
+                  {/* Visible animated text */}
+                  <pre style={{ position: 'absolute', top: '1rem', left: '1.25rem', fontSize: '0.85rem', margin: 0, userSelect: 'none' }}>
+                    {displayedCode}
+                    <span className="typing-caret"></span>
+                  </pre>
                 </div>
               </div>
             </div>
