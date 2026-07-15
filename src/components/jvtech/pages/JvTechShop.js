@@ -5,7 +5,6 @@ import {
   BoxSeamFill,
   CartFill,
   XLg,
-  Receipt,
   Printer,
   PlusLg,
   DashLg,

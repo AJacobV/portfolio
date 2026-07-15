@@ -17,10 +17,6 @@ import {
 } from "chart.js";
 import {
   BoxSeamFill,
-  PeopleFill,
-  ClipboardDataFill,
-  CurrencyDollar,
-  CartFill,
   ExclamationTriangleFill,
   PersonFill,
   ArrowRightShort,

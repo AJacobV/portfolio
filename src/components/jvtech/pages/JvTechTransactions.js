@@ -3,7 +3,6 @@ import { useJvTech } from "../JvTechContext";
 import {
   Search,
   EyeFill,
-  XLg,
   Receipt,
   ChevronRight,
 } from "react-bootstrap-icons";
