@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const developerCodeString = `const developer = {\n  name: "Angelo Valeros",\n  university: "UST",\n  role: "Web Developer",\n  passion: "Adventure",\n  skills: ["React", "ASP.NET", "PHP"]\n};`;
 
