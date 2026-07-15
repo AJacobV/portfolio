@@ -15,7 +15,6 @@ import {
   MoonFill,
   SunFill,
   Search,
-  BellFill,
   XLg,
   PersonCircle,
 } from "react-bootstrap-icons";
