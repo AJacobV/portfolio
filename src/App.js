@@ -10,6 +10,7 @@ import CursorTracer from './components/CursorTracer';
 import LazySection from './components/LazySection';
 import WizApp from './components/wiz/WizApp';
 import CICSApp from './components/CICSElect/CICSApp';
+import JvTechApp from './components/jvtech/JvTechApp';
 import Navbar from './components/Navbar';
 import './App.css';
 
@@ -57,6 +58,7 @@ function App() {
         <Route path="/" element={<PortfolioMain />} />
         <Route path="/wiz/*" element={<WizApp />} />
         <Route path="/cicselect/*" element={<CICSApp />} />
+        <Route path="/jvtech/*" element={<JvTechApp />} />
       </Routes>
     </BrowserRouter>
   );

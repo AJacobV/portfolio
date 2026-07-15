@@ -142,9 +142,15 @@ function ProjectCard({ project, index }) {
 
       {/* Text content */}
       <div style={{ padding: '1.25rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', flex: 1, position: 'relative' }}>
-        {isHovered && project.title !== 'JV TechHub' && (
+        {isHovered && (
           <div
-            onClick={project.liveLink ? () => window.open(project.liveLink, '_blank', 'noopener noreferrer') : undefined}
+            onClick={
+              project.liveLink
+                ? () => window.open(project.liveLink, '_blank', 'noopener noreferrer')
+                : project.internalLink
+                ? () => window.open(project.internalLink, '_blank', 'noopener noreferrer')
+                : undefined
+            }
             style={{
               position: 'absolute',
               inset: 0,
@@ -161,10 +167,10 @@ function ProjectCard({ project, index }) {
               borderRadius: 'inherit',
               backdropFilter: 'blur(6px)',
               zIndex: 2,
-              cursor: project.liveLink ? 'pointer' : 'default',
+              cursor: (project.liveLink || project.internalLink) ? 'pointer' : 'default',
             }}
           >
-            {project.liveLabel || (project.liveLink ? 'View Live Demo' : 'View Project')}
+            {project.liveLabel || ((project.liveLink || project.internalLink) ? 'View Live Demo' : 'View Project')}
           </div>
         )}
         <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '0.95rem', fontWeight: 800 }}>
@@ -288,6 +294,7 @@ function MyProjects() {
       icon: <Recycle />,
       images: ['USTreCycleLogin.jpeg', 'USTreCycleLoading.jpeg', 'USTreCycleHome.jpeg', 'USTreCycleAdmin.jpeg'],
       liveLink: 'https://ust-re-cycle.vercel.app',
+      liveLabel: 'View Live',
       tags: ['Course Project'],
     },
     {
@@ -307,16 +314,18 @@ function MyProjects() {
       icon: <BrushFill />,
       images: ['AmoreLux_title.jpg', 'AmoreLux_featuredfragances.jpg', 'AmoreLux_menscollection.jpg', 'AmoreLux_womenscollection.jpg'],
       liveLink: 'https://amoreluxe.vercel.app',
+      liveLabel: 'View Live',
       tags: [],
     },
     {
       title: 'JV TechHub',
       description: 'An inventory project created using Laravel Framework as a partial fulfillment of Web Application Development course.',
-      tech: ['Laravel', 'PHP', 'PostgreSQL'],
+      tech: ['React', 'Tailwind', 'Context API'],
       icon: <BoxSeamFill />,
       images: ['JVTechHub_loginpage.png', 'JVTechHub_dashboard.png'],
-      liveLink: 'https://jvtechhub2.onrender.com',
-      tags: ['Demo'],
+      internalLink: '/jvtech',
+      liveLabel: 'View demo of course project',
+      tags: ['Demo', 'Web App'],
     },
   ];
 

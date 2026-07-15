@@ -82,7 +82,11 @@ function WizLogin() {
               onChange={(e) => setPassword(e.target.value)} 
               required={!isActive}
             />
-            <button type="submit">Log In</button>
+            <button type="submit" style={{ marginTop: '5px' }}>Log In</button>
+            <div style={{ marginTop: '15px', padding: '10px', background: '#f8f9fa', borderRadius: '8px', border: '1px solid #e2e8f0', width: '100%' }}>
+              <p style={{ margin: 0, fontSize: '11px', color: '#64748b', fontWeight: 'bold' }}>Demo credentials:</p>
+              <p style={{ margin: '2px 0 0 0', fontSize: '11px', color: '#334155', fontFamily: 'monospace' }}>test@gmail.com / password123</p>
+            </div>
           </form>
         </div>
 

@@ -44,8 +44,8 @@ function CICSLogin() {
               
               <form onSubmit={handleAuth} className="cics-modern-form">
                 <div className="cics-input-group">
-                  <input type="text" id="login-studentid" required placeholder=" " maxLength={11} />
-                  <label htmlFor="login-studentid">Student ID</label>
+                  <input type="text" id="login-studentid" required placeholder=" " />
+                  <label htmlFor="login-studentid">Email / Student ID</label>
                 </div>
                 <div className="cics-input-group">
                   <input type="password" id="login-password" required placeholder=" " />
@@ -53,6 +53,11 @@ function CICSLogin() {
                 </div>
                 <button type="submit" className="cics-submit-btn">Log In</button>
               </form>
+
+              <div style={{ marginTop: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <p style={{ margin: 0, fontSize: '0.85rem', color: '#a0aec0', fontWeight: 'bold', marginBottom: '0.5rem' }}>Demo credentials:</p>
+                <p style={{ margin: 0, fontSize: '0.85rem', color: '#e2e8f0', fontFamily: 'monospace' }}>test@gmail.com / password123</p>
+              </div>
 
               <div className="cics-card-footer">
                 <p>Don't have an account?</p>
