@@ -3,9 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 const developerCodeString = `const developer = {\n  name: "Angelo Valeros",\n  university: "UST",\n  role: "Web Developer",\n  passion: "Adventure",\n  skills: ["React", "ASP.NET", "PHP"]\n};`;
 
 function Home() {
-  const [navOpen, setNavOpen] = useState(false);
-  const closeTimerRef = useRef(null);
-
   // 3D Spatial Drag State
   const [rotation, setRotation] = useState({ x: 8, y: -8 });
   const [isDragging, setIsDragging] = useState(false);
@@ -27,10 +24,6 @@ function Home() {
     return () => clearTimeout(startDelay);
   }, []);
 
-  useEffect(() => () => {
-    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
-  }, []);
-
   useEffect(() => {
     const handleGlobalMouseMove = (e) => {
       if (!isDragging) return;
@@ -38,7 +31,6 @@ function Home() {
       const dy = e.clientY - lastMousePos.y;
       
       setRotation(prev => {
-        // Limit the rotation so it doesn't flip completely, e.g., between -45 and 45 degrees
         let newX = prev.x - dy * 0.5;
         let newY = prev.y + dx * 0.5;
         newX = Math.max(-45, Math.min(45, newX));
@@ -66,50 +58,15 @@ function Home() {
   const handleMouseDown = (e) => {
     setIsDragging(true);
     setLastMousePos({ x: e.clientX, y: e.clientY });
-    e.preventDefault(); // prevent text selection while dragging
+    e.preventDefault();
   };
 
   const scrollToSection = (sectionId) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-    setNavOpen(false);
-    if (closeTimerRef.current) {
-      clearTimeout(closeTimerRef.current);
-      closeTimerRef.current = null;
-    }
-  };
-
-  const handleNavMouseEnter = () => {
-    setNavOpen(true);
-    if (closeTimerRef.current) {
-      clearTimeout(closeTimerRef.current);
-      closeTimerRef.current = null;
-    }
-  };
-
-  const handleNavMouseLeave = () => {
-    closeTimerRef.current = setTimeout(() => setNavOpen(false), 3000);
   };
 
   return (
     <>
-      {/* ── Navigation ── */}
-      <nav
-        className={`navbar ${navOpen ? 'open' : ''}`}
-        onMouseEnter={handleNavMouseEnter}
-        onMouseLeave={handleNavMouseLeave}
-      >
-        <div className="nav-dots">
-          <span /><span /><span />
-        </div>
-        <div className="nav-links">
-          {['home', 'about', 'skills', 'projects', 'contact'].map((s) => (
-            <button key={s} onClick={() => scrollToSection(s)}>
-              {s.charAt(0).toUpperCase() + s.slice(1)}
-            </button>
-          ))}
-        </div>
-      </nav>
-
       {/* ── Hero ── */}
       <section
         id="home"

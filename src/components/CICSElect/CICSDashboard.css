@@ -1,7 +1,10 @@
-/* Dashboard Wrapper */
 .cics-dash-wrapper {
     display: flex;
     flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
     height: 100vh;
     font-family: 'Montserrat', sans-serif;
     background-color: #f4f6f9; /* Greyish background from screenshot */

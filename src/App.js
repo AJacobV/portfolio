@@ -10,6 +10,7 @@ import CursorTracer from './components/CursorTracer';
 import LazySection from './components/LazySection';
 import WizApp from './components/wiz/WizApp';
 import CICSApp from './components/CICSElect/CICSApp';
+import Navbar from './components/Navbar';
 import './App.css';
 
 function PortfolioMain() {
@@ -25,6 +26,7 @@ function PortfolioMain() {
     <div className="App">
       {loading && <LoadingScreen onDone={handleLoadingDone} />}
       <CursorTracer active={!loading} />
+      <Navbar />
       <main className={`main-content ${contentVisible ? 'visible' : ''}`}>
         <Home />
 
