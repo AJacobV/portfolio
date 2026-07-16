@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   BookFill,
   BoxSeamFill,
@@ -91,6 +92,7 @@ function useScrollVisibility() {
 function ProjectCard({ project, index }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let interval;
@@ -142,13 +144,13 @@ function ProjectCard({ project, index }) {
 
       {/* Text content */}
       <div style={{ padding: '1.25rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', flex: 1, position: 'relative' }}>
-        {isHovered && (
+        {isHovered && (project.liveLink || project.internalLink) && (
           <div
             onClick={
               project.liveLink
                 ? () => window.open(project.liveLink, '_blank', 'noopener noreferrer')
                 : project.internalLink
-                ? () => window.open(project.internalLink, '_blank', 'noopener noreferrer')
+                ? () => navigate(project.internalLink)
                 : undefined
             }
             style={{
@@ -167,10 +169,10 @@ function ProjectCard({ project, index }) {
               borderRadius: 'inherit',
               backdropFilter: 'blur(6px)',
               zIndex: 2,
-              cursor: (project.liveLink || project.internalLink) ? 'pointer' : 'default',
+              cursor: 'pointer',
             }}
           >
-            {project.liveLabel || ((project.liveLink || project.internalLink) ? 'View Live Demo' : 'View Project')}
+            {project.liveLabel || 'View Live Demo'}
           </div>
         )}
         <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '0.95rem', fontWeight: 800 }}>
@@ -250,6 +252,8 @@ function ProjectCard({ project, index }) {
 function MyProjects() {
   const [headerRef, headerPhase] = useScrollVisibility();
   const [cardsRef, cardsPhase] = useScrollVisibility();
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [animationKey, setAnimationKey] = useState(0);
 
   const getAnimClass = (phase) =>
     phase === 'entering'
@@ -265,7 +269,8 @@ function MyProjects() {
       tech: ['ASP.NET', 'MySQL'],
       icon: <ClipboardHeartFill />,
       images: ['LMDLogin.jpeg', 'LMDHome.jpeg', 'LMDContent.jpeg'],
-      tags: ['Course Project', 'Demo'],
+      tags: ['Course Project'],
+      category: 'Course Projects',
     },
     {
       title: 'WIZ',
@@ -276,6 +281,7 @@ function MyProjects() {
       liveLink: '/wiz',
       liveLabel: 'View demo of course project',
       tags: ['Course Project', 'Demo'],
+      category: 'Course Projects',
     },
     {
       title: 'CICSelect',
@@ -286,6 +292,7 @@ function MyProjects() {
       liveLink: '/cicselect',
       liveLabel: 'View demo of course project',
       tags: ['Course Project', 'Demo'],
+      category: 'Course Projects',
     },
     {
       title: 'UST rE-CYCLE',
@@ -296,6 +303,7 @@ function MyProjects() {
       liveLink: 'https://ust-re-cycle.vercel.app',
       liveLabel: 'View Live',
       tags: ['Course Project'],
+      category: 'Course Projects',
     },
     {
       title: 'Falcon Eye',
@@ -303,9 +311,8 @@ function MyProjects() {
       tech: ['React', 'Node.js', 'NoSQL', 'Socket.IO'],
       icon: <EyeFill />,
       images: ['falconEye_dashboard.png', 'falconEye_heatmappage.png', 'falconEye_incidentreportpage.png', 'falconEye_lostandfountpage.png'],
-      liveLink: 'https://falconeye.school',
-      liveLabel: 'Thesis Capstone',
-      tags: ['Demo', 'LIVE'],
+      tags: ['Web App'],
+      category: 'Course Projects',
     },
     {
       title: 'Amore Luxe',
@@ -316,6 +323,7 @@ function MyProjects() {
       liveLink: 'https://amoreluxe.vercel.app',
       liveLabel: 'View Live',
       tags: [],
+      category: 'Side Projects',
     },
     {
       title: 'JV TechHub',
@@ -326,8 +334,20 @@ function MyProjects() {
       internalLink: '/jvtech',
       liveLabel: 'View demo of course project',
       tags: ['Demo', 'Web App'],
+      category: 'Course Projects',
     },
   ];
+
+  const handleCategoryChange = (category) => {
+    if (category !== activeCategory) {
+      setActiveCategory(category);
+      setAnimationKey(prev => prev + 1);
+    }
+  };
+
+  const filteredProjects = activeCategory === 'All'
+    ? projects
+    : projects.filter((project) => project.category === activeCategory);
 
   return (
     <section id="projects" style={{ position: 'relative', zIndex: 1, padding: '7rem 0' }}>
@@ -337,16 +357,37 @@ function MyProjects() {
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.4rem)', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 0.5rem', color: '#f7f7f7' }}>
             My <span className="gold-text">Projects</span>
           </h2>
-          <p style={{ textAlign: 'center', color: '#b2b2b2', maxWidth: '720px', margin: '0 auto 3.5rem', lineHeight: 1.6 }}>
+          <p style={{ textAlign: 'center', color: '#b2b2b2', maxWidth: '720px', margin: '0 auto 2.5rem', lineHeight: 1.6 }}>
             A showcase of my work and the projects I've built throughout my journey
           </p>
+
+          <div className="project-filters">
+            {['All', 'Course Projects', 'Side Projects', 'Work Projects'].map((category) => (
+              <button
+                key={category}
+                className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
+                onClick={() => handleCategoryChange(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div ref={cardsRef} className={getAnimClass(cardsPhase)}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            {projects.map((project, index) => (
-              <ProjectCard key={project.title} project={project} index={index} />
-            ))}
+          <div
+            key={animationKey}
+            className="projects-grid-container fade-enter grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch"
+          >
+            {filteredProjects.length > 0 ? (
+              filteredProjects.map((project, index) => (
+                <ProjectCard key={project.title} project={project} index={index} />
+              ))
+            ) : (
+              <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem', color: '#b2b2b2' }}>
+                <p>No projects available in this category yet. Check back soon!</p>
+              </div>
+            )}
           </div>
         </div>
 
