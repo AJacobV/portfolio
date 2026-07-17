@@ -268,7 +268,7 @@ function MyProjects() {
     {
       title: 'LMD Dental Hub',
       description: 'A secure and user-friendly admin side dental website created as a team effort for our Software Engineering Course.',
-      tech: ['ASP.NET MVC', 'C#', 'SQL'],
+      tech: ['ASP.NET', 'Angular JS', 'C#', 'SQL'],
       icon: <ClipboardHeartFill />,
       images: ['LMDLogin.jpeg', 'LMDHome.jpeg', 'LMDContent.jpeg'],
       tags: ['Course Project'],
@@ -288,7 +288,7 @@ function MyProjects() {
     {
       title: 'CICSelect',
       description: 'An online voting platform for CICS students with secure voting system and real-time tallying.',
-      tech: ['ASP.NET MVC', 'C#', 'SQL'],
+      tech: ['ASP.NET', 'Angular JS', 'C#', 'SQL'],
       icon: <FileEarmarkCheckFill />,
       images: ['CICSSelectHome.jpeg', 'CICSSelectContent.jpeg', 'CICSSelectAdmin.jpeg'],
       liveLink: '/cicselect',
@@ -325,7 +325,7 @@ function MyProjects() {
       icon: <Truck />,
       images: ['fisadmin_dashboard.png', 'fisadmin_dispatch.png', 'fisadmin_login.png', 'fisadmin_fuel.png'],
       imageStyle: { transform: 'scale(1.25)' },
-      tags: [],
+      tags: ['TypeScript'],
       category: 'Work Projects',
     },
     {

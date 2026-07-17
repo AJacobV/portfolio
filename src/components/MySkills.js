@@ -104,9 +104,9 @@ function MySkills() {
     },
     {
       title: 'Tech & Tools',
-      tags: ['React', 'Tailwind', 'Typescript', 'Javascript', 'HTML & CSS', 'PHP', 'Node.js', 'Next.js', 'SQL', 'PostgreSQL', 'NoSQL', 'ASP.NET', 'Laravel', 'Firebase', 'Supabase', 'Blackblaze', 'Vercel', 'Render', 'Flutter'],
+      tags: ['React', 'Angular.js', 'Tailwind', 'Typescript', 'Javascript', 'HTML & CSS', 'PHP', 'Node.js', 'Next.js', 'SQL', 'PostgreSQL', 'NoSQL', 'ASP.NET', 'Laravel', 'Firebase', 'Supabase', 'Blackblaze', 'Vercel', 'Render', 'Flutter'],
       tagSections: [
-        { name: 'Front-end', tags: ['React', 'Tailwind', 'Typescript', 'Javascript', 'HTML & CSS'] },
+        { name: 'Front-end', tags: ['React', 'Angular.js', 'Tailwind', 'Typescript', 'Javascript', 'HTML & CSS'] },
         { name: 'Back-end', tags: ['PHP', 'Node.js', 'Next.js', 'SQL', 'PostgreSQL', 'NoSQL'] },
         { name: 'Frameworks', tags: ['ASP.NET', 'Laravel'] },
         { name: 'BaaS', tags: ['Firebase', 'Supabase', 'Blackblaze'] },
@@ -183,7 +183,7 @@ function MySkills() {
             >
               {/* Un-skew the inner content so text remains readable */}
               <div style={{ transform: 'skewX(12deg)', padding: '0 1.5rem' }}>
-                <h3 style={{ margin: '0 0 1rem', color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '1rem', fontWeight: 800, textAlign: title === 'Tech & Tools' ? 'center' : 'left' }}>
+                <h3 style={{ margin: '0 0 1rem', color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '1rem', fontWeight: 800, textAlign: title === 'Tech & Tools' ? 'center' : 'left', opacity: title === 'Tech & Tools' && hoveredCard !== title ? 0 : 1, transition: 'opacity 300ms ease' }}>
                   {title}
                 </h3>
                 {desc && (

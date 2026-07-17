@@ -101,8 +101,8 @@ function Home() {
                 <button className="btn btn-secondary" onClick={() => scrollToSection('contact')}>
                   Contact Me
                 </button>
-                <a href="/Resume.pdf" download="Angelo_Valeros_Resume.pdf" className="btn btn-secondary">
-                  Download Resume 📄
+                <a href="/Valeros_Angelo_Jacob-CV.pdf" download="Valeros_Angelo_Jacob-CV.pdf" className="btn btn-secondary">
+                  Download CV
                 </a>
               </div>
             </div>
