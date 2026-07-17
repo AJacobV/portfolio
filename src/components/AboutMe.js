@@ -149,8 +149,7 @@ function AboutMe() {
     };
   }, [sectionPhase, shards.length]);
 
-  const scrollToSection = (id) =>
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+
 
   const headerClass =
     sectionPhase === 'entering' ? 'scroll-fade entering' :

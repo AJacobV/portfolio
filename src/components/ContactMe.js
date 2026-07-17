@@ -12,19 +12,7 @@ const containerStyle = {
   margin: '0 auto',
 };
 
-const cardStyle = {
-  background: 'rgba(14,14,14,0.88)',
-  border: '1px solid rgba(255,255,255,0.08)',
-  boxShadow: '0 24px 90px rgba(0,0,0,0.6)',
-  backdropFilter: 'blur(12px)',
-  borderRadius: '18px',
-  padding: '2rem',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '1rem',
-  position: 'relative',
-  overflow: 'hidden',
-};
+
 
 const iconBoxStyle = {
   width: '3rem',
