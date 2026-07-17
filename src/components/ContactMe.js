@@ -137,49 +137,95 @@ function ContactMe() {
           </div>
 
           {/* Two-column: contact info | social */}
-          <div ref={contentRef} className={`grid grid-cols-1 lg:grid-cols-[1fr_0.55fr] gap-6 items-start ${getAnimClass(contentPhase)}`}>
+          <div ref={contentRef} className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch ${getAnimClass(contentPhase)}`}>
 
-            {/* Left – contact cards stacked */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            {/* Left – Direct Contact */}
+            <div 
+              style={{
+                background: 'linear-gradient(145deg, rgba(20,20,20,0.8) 0%, rgba(10,10,10,0.95) 100%)',
+                border: '1px solid rgba(255,255,255,0.05)',
+                boxShadow: '0 30px 60px rgba(0,0,0,0.6)',
+                backdropFilter: 'blur(16px)',
+                borderRadius: '24px',
+                padding: '2.5rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '2.5rem',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'all 0.4s cubic-bezier(0.25, 1, 0.5, 1)',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(225,6,0,0.3)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 35px 70px rgba(225,6,0,0.15)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 30px 60px rgba(0,0,0,0.6)'; }}
+            >
               {/* Email */}
-              <div style={cardStyle}>
-                <div style={iconBoxStyle}><EnvelopeFill /></div>
-                <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '0.95rem', fontWeight: 800 }}>Email</h3>
-                <p style={{ margin: 0, color: '#b2b2b2', fontSize: '0.9rem', wordBreak: 'break-all' }}>
-                  angelojacob.valeros.cics@ust.edu.ph
-                </p>
-                <a
-                  href="https://mail.google.com/mail/?view=cm&fs=1&to=angelojacob.valeros.cics@ust.edu.ph&su=Inquiry&body=Hello%2C%20we%27ve%20had%20a%20chance%20to%20explore%20your%20internship%20portfolio%20and%20would%20love%20to%20connect%20with%20you%20to%20talk%20more%20about%20your%20work%20and%20potential%20opportunities."
-                  className="contact-link"
-                  style={{ alignSelf: 'flex-start' }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Send an Email
-                </a>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                <div style={{ ...iconBoxStyle, width: '4rem', height: '4rem', fontSize: '1.5rem', background: 'rgba(225,6,0,0.1)' }}><EnvelopeFill /></div>
+                <div style={{ flex: 1 }}>
+                  <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '0.95rem', fontWeight: 800 }}>Email</h3>
+                  <p style={{ margin: '0.25rem 0 0.75rem', color: '#b2b2b2', fontSize: '0.9rem', wordBreak: 'break-all' }}>
+                    angelojacob.valeros.cics@ust.edu.ph
+                  </p>
+                  <a
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=angelojacob.valeros.cics@ust.edu.ph&su=Inquiry"
+                    className="contact-link"
+                    style={{ alignSelf: 'flex-start', padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Send an Email
+                  </a>
+                </div>
               </div>
 
+              {/* Divider */}
+              <div style={{ height: '1px', background: 'linear-gradient(90deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)' }} />
+
               {/* Phone */}
-              <div style={cardStyle}>
-                <div style={iconBoxStyle}><TelephoneFill /></div>
-                <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '0.95rem', fontWeight: 800 }}>Phone</h3>
-                <p style={{ margin: 0, color: '#b2b2b2', fontSize: '0.9rem' }}>(63) 995 498 4281</p>
-                <a href="tel:+639954984281" className="contact-link" style={{ alignSelf: 'flex-start' }}>
-                  Call Me
-                </a>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                <div style={{ ...iconBoxStyle, width: '4rem', height: '4rem', fontSize: '1.5rem', background: 'rgba(225,6,0,0.1)' }}><TelephoneFill /></div>
+                <div style={{ flex: 1 }}>
+                  <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '0.95rem', fontWeight: 800 }}>Phone</h3>
+                  <p style={{ margin: '0.25rem 0 0.75rem', color: '#b2b2b2', fontSize: '0.9rem' }}>(63) 995 498 4281</p>
+                  <a href="tel:+639954984281" className="contact-link" style={{ alignSelf: 'flex-start', padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}>
+                    Call Me
+                  </a>
+                </div>
               </div>
             </div>
 
-            {/* Right – socials card */}
-            <div style={cardStyle}>
-              <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '0.95rem', fontWeight: 800 }}>
-                Find Me On
+            {/* Right – Socials */}
+            <div 
+              style={{
+                background: 'linear-gradient(145deg, rgba(20,20,20,0.8) 0%, rgba(10,10,10,0.95) 100%)',
+                border: '1px solid rgba(255,255,255,0.05)',
+                boxShadow: '0 30px 60px rgba(0,0,0,0.6)',
+                backdropFilter: 'blur(16px)',
+                borderRadius: '24px',
+                padding: '2.5rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '1.5rem',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'all 0.4s cubic-bezier(0.25, 1, 0.5, 1)',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(225,6,0,0.3)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 35px 70px rgba(225,6,0,0.15)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 30px 60px rgba(0,0,0,0.6)'; }}
+            >
+              <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.1em', fontSize: '1.15rem', fontWeight: 900, textAlign: 'center' }}>
+                Connect With Me
               </h3>
-              <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
-                <a href="https://github.com/AJacobV" target="_blank" rel="noopener noreferrer" className="social-icon" title="GitHub">
+              <p style={{ margin: 0, color: '#b2b2b2', fontSize: '0.95rem', textAlign: 'center', maxWidth: '85%', lineHeight: 1.6 }}>
+                Follow my journey or check out my latest open-source projects on these platforms.
+              </p>
+              <div style={{ display: 'flex', gap: '2rem', marginTop: '1rem' }}>
+                <a href="https://github.com/AJacobV" target="_blank" rel="noopener noreferrer" className="social-icon" title="GitHub" style={{ width: '4.5rem', height: '4.5rem', fontSize: '2rem' }}>
                   <Github />
                 </a>
-                <a href="https://www.facebook.com/angelojacob.valeros" target="_blank" rel="noopener noreferrer" className="social-icon" title="Facebook">
+                <a href="https://www.facebook.com/angelojacob.valeros" target="_blank" rel="noopener noreferrer" className="social-icon" title="Facebook" style={{ width: '4.5rem', height: '4.5rem', fontSize: '2rem' }}>
                   <Facebook />
                 </a>
               </div>

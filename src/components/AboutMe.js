@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
+import { EnvelopeFill, Github, Facebook } from 'react-bootstrap-icons';
 
 const sectionStyle = {
   position: 'relative',
@@ -114,6 +115,7 @@ function useSectionPhase() {
 
 function AboutMe() {
   const [sectionRef, sectionPhase] = useSectionPhase();
+  const [showConnectPopup, setShowConnectPopup] = useState(false);
 
   // shardPhase: 'hidden' | 'building' | 'built' | 'shattering'
   const [shardPhase, setShardPhase] = useState('hidden');
@@ -296,10 +298,10 @@ function AboutMe() {
                   Who I Am
                 </h3>
                 <p style={{ margin: 0, color: '#b2b2b2', lineHeight: 1.75, fontSize: '0.98rem' }}>
-                  I am a 4th year student at the{' '}
+                  I am a graduate student with an award of Cum Laude in Bachelor of Science in Information Technology at the{' '}
                   <span className="gold-text" style={{ fontWeight: 600 }}>University of Santo Tomas</span>{' '}
                   with a passion for technology and adventure. I started my programming journey with
-                  Java and have since expanded to PHP, React, Node.js, SQL, and ASP.
+                  Java and have since expanded to PHP, React, Node.js, SQL, and ASP.NET
                 </p>
                 <p style={{ margin: 0, color: '#b2b2b2', lineHeight: 1.75, fontSize: '0.98rem' }}>
                   I am a passionate programmer with a knack for creating clean, user-friendly,
@@ -308,7 +310,7 @@ function AboutMe() {
                 </p>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', margin: '0.5rem 0' }}>
-                  {[{ num: '3', label: 'Years of Coding' }, { num: '6', label: 'Projects Completed' }].map(({ num, label }) => (
+                  {[{ num: '4', label: 'Years of Coding' }, { num: '7', label: 'Projects Completed' }].map(({ num, label }) => (
                     <div key={label} style={{
                       padding: '1rem',
                       borderRadius: '16px',
@@ -325,14 +327,58 @@ function AboutMe() {
                   ))}
                 </div>
 
-                <a
-                  href="#contact"
-                  className="btn btn-primary"
-                  style={{ alignSelf: 'flex-start' }}
-                  onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
-                >
-                  Let's Connect
-                </a>
+                <div style={{ position: 'relative', alignSelf: 'flex-start' }}>
+                  <button
+                    className="btn btn-primary"
+                    onClick={(e) => { e.preventDefault(); setShowConnectPopup(!showConnectPopup); }}
+                  >
+                    Let's Connect
+                  </button>
+                  
+                  {/* Connect Popup */}
+                  <div style={{
+                    position: 'absolute',
+                    bottom: 'calc(100% + 15px)',
+                    left: '50%',
+                    transform: showConnectPopup ? 'translateX(-50%) translateY(0)' : 'translateX(-50%) translateY(10px)',
+                    background: 'linear-gradient(145deg, rgba(20,20,20,0.95) 0%, rgba(10,10,10,0.98) 100%)',
+                    border: '1px solid rgba(225,6,0,0.4)',
+                    backdropFilter: 'blur(16px)',
+                    padding: '0.75rem 1rem',
+                    borderRadius: '16px',
+                    display: 'flex',
+                    gap: '1rem',
+                    boxShadow: '0 15px 40px rgba(0,0,0,0.6), 0 0 20px rgba(225,6,0,0.2)',
+                    opacity: showConnectPopup ? 1 : 0,
+                    pointerEvents: showConnectPopup ? 'auto' : 'none',
+                    transition: 'all 0.3s cubic-bezier(0.25, 1, 0.5, 1)',
+                    zIndex: 10
+                  }}>
+                    {/* Bottom pointing triangle */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      borderLeft: '8px solid transparent',
+                      borderRight: '8px solid transparent',
+                      borderTop: '8px solid rgba(225,6,0,0.4)',
+                    }} />
+                    <div style={{
+                      position: 'absolute',
+                      top: 'calc(100% - 1px)',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      borderLeft: '8px solid transparent',
+                      borderRight: '8px solid transparent',
+                      borderTop: '8px solid rgba(15,15,15,0.95)',
+                    }} />
+                    
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=angelojacob.valeros.cics@ust.edu.ph&su=Inquiry" target="_blank" rel="noopener noreferrer" className="social-icon" style={{ fontSize: '1.25rem', color: '#f7f7f7', width: '2.75rem', height: '2.75rem' }} title="Email"><EnvelopeFill /></a>
+                    <a href="https://github.com/AJacobV" target="_blank" rel="noopener noreferrer" className="social-icon" style={{ fontSize: '1.25rem', color: '#f7f7f7', width: '2.75rem', height: '2.75rem' }} title="GitHub"><Github /></a>
+                    <a href="https://www.facebook.com/angelojacob.valeros" target="_blank" rel="noopener noreferrer" className="social-icon" style={{ fontSize: '1.25rem', color: '#f7f7f7', width: '2.75rem', height: '2.75rem' }} title="Facebook"><Facebook /></a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
