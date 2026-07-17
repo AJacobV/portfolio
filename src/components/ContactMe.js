@@ -190,23 +190,84 @@ function ContactMe() {
       </section>
 
       {/* ── Footer ── */}
-      <footer ref={footerRef} className={getAnimClass(footerPhase)} style={{ position: 'relative', zIndex: 1, paddingBottom: '4rem' }}>
+      <footer ref={footerRef} className={getAnimClass(footerPhase)} style={{ position: 'relative', zIndex: 1, paddingBottom: '3rem' }}>
         <div style={containerStyle}>
-          <div style={{ textAlign: 'center', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-            <p style={{ margin: '0 0 0.25rem', fontSize: '1.1rem', fontWeight: 800 }}>
-              <span className="gold-text">Angelo Jacob A. Valeros</span>
-            </p>
-            <p style={{ margin: '0 0 1.5rem', fontSize: '0.9rem', color: '#b2b2b2' }}>Web Developer &amp; Designer</p>
-            <div className="footer-links" style={{ marginBottom: '1.5rem' }}>
+          <div style={{
+            background: 'linear-gradient(180deg, rgba(20,20,20,0.4) 0%, rgba(10,10,10,0.8) 100%)',
+            borderTop: '1px solid rgba(225,6,0,0.3)',
+            borderRadius: '24px',
+            padding: '3rem 2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(12px)'
+          }}>
+            {/* Top Logo / Name Area */}
+            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+              <h2 style={{ margin: '0 0 0.5rem', fontSize: '1.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                <span className="gold-text">Angelo Jacob</span>
+              </h2>
+              <p style={{ margin: 0, fontSize: '1rem', color: '#b2b2b2', letterSpacing: '0.05em' }}>Programmer &amp; Designer</p>
+            </div>
+
+            {/* Links Area */}
+            <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: '1rem',
+              marginBottom: '3rem'
+            }}>
               {['home', 'about', 'skills', 'projects', 'contact'].map((s) => (
-                <button key={s} onClick={() => scrollToSection(s)}>
+                <button
+                  key={s}
+                  onClick={() => scrollToSection(s)}
+                  style={{
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    color: '#f7f7f7',
+                    padding: '0.5rem 1.25rem',
+                    borderRadius: '999px',
+                    fontSize: '0.85rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.08em',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(225,6,0,0.15)';
+                    e.currentTarget.style.borderColor = 'rgba(225,6,0,0.4)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
                   {s.charAt(0).toUpperCase() + s.slice(1)}
                 </button>
               ))}
             </div>
-            <p style={{ margin: 0, fontSize: '0.85rem', color: '#b2b2b2' }}>
-              © 2025 Angelo Jacob A. Valeros. All Rights Reserved.
-            </p>
+
+            {/* Bottom Copyright Area */}
+            <div style={{
+              width: '100%',
+              borderTop: '1px solid rgba(255,255,255,0.08)',
+              paddingTop: '1.5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}>
+              <p style={{ margin: 0, fontSize: '0.85rem', color: '#888' }}>
+                © {new Date().getFullYear()} Angelo Jacob A. Valeros. All Rights Reserved.
+              </p>
+              <p style={{ margin: 0, fontSize: '0.75rem', color: '#555' }}>
+                Designed and built with passion.
+              </p>
+            </div>
           </div>
         </div>
       </footer>

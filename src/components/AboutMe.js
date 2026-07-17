@@ -302,7 +302,7 @@ function AboutMe() {
                   Java and have since expanded to PHP, React, Node.js, SQL, and ASP.
                 </p>
                 <p style={{ margin: 0, color: '#b2b2b2', lineHeight: 1.75, fontSize: '0.98rem' }}>
-                  I am a passionate web developer with a knack for creating clean, user-friendly,
+                  I am a passionate programmer with a knack for creating clean, user-friendly,
                   and responsive websites. When I'm not coding, you can find me exploring new hiking
                   trails, dabbling in digital art, or building custom keyboards.
                 </p>

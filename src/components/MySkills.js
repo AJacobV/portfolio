@@ -87,11 +87,12 @@ const cardStyle = {
 function MySkills() {
   const [headerRef, headerPhase] = useScrollVisibility();
   const [cardsRef, cardsPhase] = useScrollVisibility();
+  const [hoveredCard, setHoveredCard] = useState(null);
 
   const categories = [
     {
       title: 'Development',
-      desc: 'PHP, React, Node.js, SQL, and ASP.',
+      desc: 'Web application, brochure site, and mobile application',
     },
     {
       title: 'Design',
@@ -102,8 +103,16 @@ function MySkills() {
       desc: 'Systematic testing and bug identification.',
     },
     {
-      title: 'Technologies & Tools',
-      tags: ['React.js', 'Node.js', 'PHP', 'ASP.NET', 'MySQL', 'Java', 'HTML/CSS', 'Laravel'],
+      title: 'Tech & Tools',
+      tags: ['React', 'Tailwind', 'Typescript', 'Javascript', 'HTML & CSS', 'PHP', 'Node.js', 'Next.js', 'SQL', 'PostgreSQL', 'NoSQL', 'ASP.NET', 'Laravel', 'Firebase', 'Supabase', 'Blackblaze', 'Vercel', 'Render', 'Flutter'],
+      tagSections: [
+        { name: 'Front-end', tags: ['React', 'Tailwind', 'Typescript', 'Javascript', 'HTML & CSS'] },
+        { name: 'Back-end', tags: ['PHP', 'Node.js', 'Next.js', 'SQL', 'PostgreSQL', 'NoSQL'] },
+        { name: 'Frameworks', tags: ['ASP.NET', 'Laravel'] },
+        { name: 'BaaS', tags: ['Firebase', 'Supabase', 'Blackblaze'] },
+        { name: 'PaaS', tags: ['Vercel', 'Render'] },
+        { name: 'Mobile', tags: ['Flutter'] }
+      ],
     },
   ];
 
@@ -143,48 +152,54 @@ function MySkills() {
             padding: '20px 40px',  // horizontal padding to compress cards and fit skew
           }}
         >
-          {categories.map(({ title, desc, tags }, i) => (
+          {categories.map(({ title, desc, tags, tagSections }, i) => (
             <div
               key={title}
               style={{
                 ...cardStyle,
-                flex: '1 1 0',
+                flex: hoveredCard === title ? '3 1 0' : hoveredCard ? '0.6 1 0' : '1 1 0',
                 minHeight: '320px', // expand the height of the cards
                 transform: 'skewX(-12deg)',
-                transition: 'transform 400ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 400ms ease',
+                transition: 'flex 500ms cubic-bezier(0.25, 1, 0.5, 1), transform 400ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 400ms ease',
                 cursor: 'default',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center', // center content vertically in the taller cards
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'skewX(-12deg) scale(1.05) translateY(-10px)';
-                e.currentTarget.style.boxShadow = '0 30px 60px rgba(225, 6, 0, 0.3)';
+                if (title === 'Tech & Tools') {
+                  setHoveredCard(title);
+                  e.currentTarget.style.transform = 'skewX(-12deg) scale(1.02) translateY(-5px)';
+                  e.currentTarget.style.boxShadow = '0 30px 60px rgba(225, 6, 0, 0.3)';
+                }
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'skewX(-12deg)';
-                e.currentTarget.style.boxShadow = '0 24px 90px rgba(0,0,0,0.6)';
+                if (title === 'Tech & Tools') {
+                  setHoveredCard(null);
+                  e.currentTarget.style.transform = 'skewX(-12deg)';
+                  e.currentTarget.style.boxShadow = '0 24px 90px rgba(0,0,0,0.6)';
+                }
               }}
             >
               {/* Un-skew the inner content so text remains readable */}
-              <div style={{ transform: 'skewX(12deg)' }}>
-                <h3 style={{ margin: '0 0 1rem', color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '1rem', fontWeight: 800 }}>
+              <div style={{ transform: 'skewX(12deg)', padding: '0 1.5rem' }}>
+                <h3 style={{ margin: '0 0 1rem', color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '1rem', fontWeight: 800, textAlign: title === 'Tech & Tools' ? 'center' : 'left' }}>
                   {title}
                 </h3>
                 {desc && (
                   <p style={{ margin: 0, color: '#b2b2b2', fontSize: '0.9rem', lineHeight: 1.6 }}>{desc}</p>
                 )}
-                {tags && (
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                {tags && hoveredCard !== title && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', opacity: hoveredCard !== title ? 1 : 0, transition: 'opacity 300ms ease' }}>
                     {tags.map((tag) => (
                       <span
                         key={tag}
                         style={{
                           display: 'inline-flex',
                           alignItems: 'center',
-                          padding: '0.35rem 0.8rem',
+                          padding: '0.2rem 0.6rem',
                           borderRadius: '999px',
-                          fontSize: '0.8rem',
+                          fontSize: '0.65rem',
                           color: '#fff',
                           background: 'rgba(225,6,0,0.08)',
                           border: '1px solid rgba(225,6,0,0.25)',
@@ -192,6 +207,35 @@ function MySkills() {
                       >
                         {tag}
                       </span>
+                    ))}
+                  </div>
+                )}
+                {tagSections && hoveredCard === title && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginTop: '0.5rem', opacity: hoveredCard === title ? 1 : 0, transition: 'opacity 300ms ease' }}>
+                    {tagSections.map((sec) => (
+                      <div key={sec.name}>
+                        <h4 style={{ margin: '0 0 0.3rem', color: '#b2b2b2', fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{sec.name}</h4>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
+                          {sec.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                padding: '0.2rem 0.5rem',
+                                borderRadius: '999px',
+                                fontSize: '0.65rem',
+                                color: '#fff',
+                                background: 'rgba(225,6,0,0.08)',
+                                border: '1px solid rgba(225,6,0,0.25)',
+                                whiteSpace: 'nowrap',
+                              }}
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     ))}
                   </div>
                 )}

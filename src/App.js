@@ -6,7 +6,7 @@ import MySkills from './components/MySkills';
 import MyProjects from './components/MyProjects';
 import ContactMe from './components/ContactMe';
 import LoadingScreen from './components/LoadingScreen';
-import CursorTracer from './components/CursorTracer';
+
 import LazySection from './components/LazySection';
 import WizApp from './components/wiz/WizApp';
 import CICSApp from './components/CICSElect/CICSApp';
@@ -26,7 +26,7 @@ function PortfolioMain() {
   return (
     <div className="App">
       {loading && <LoadingScreen onDone={handleLoadingDone} />}
-      <CursorTracer active={!loading} />
+
       <Navbar />
       <main className={`main-content ${contentVisible ? 'visible' : ''}`}>
         <Home />

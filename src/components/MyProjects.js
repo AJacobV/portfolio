@@ -8,6 +8,7 @@ import {
   EyeFill,
   FileEarmarkCheckFill,
   Recycle,
+  Truck,
 } from 'react-bootstrap-icons';
 
 const cardStyle = {
@@ -120,6 +121,7 @@ function ProjectCard({ project, index }) {
                 src={`/${img}`}
                 alt={`${project.title} screenshot ${imgIndex + 1}`}
                 className={`carousel-image ${imgIndex === currentImageIndex ? 'active' : ''}`}
+                style={project.imageStyle || {}}
               />
             ))}
             {project.images.length > 1 && (
@@ -266,7 +268,7 @@ function MyProjects() {
     {
       title: 'LMD Dental Hub',
       description: 'A secure and user-friendly admin side dental website created as a team effort for our Software Engineering Course.',
-      tech: ['ASP.NET', 'MySQL'],
+      tech: ['ASP.NET MVC', 'C#', 'SQL'],
       icon: <ClipboardHeartFill />,
       images: ['LMDLogin.jpeg', 'LMDHome.jpeg', 'LMDContent.jpeg'],
       tags: ['Course Project'],
@@ -275,23 +277,23 @@ function MyProjects() {
     {
       title: 'WIZ',
       description: 'An online study platform where students can test their knowledge based on content they input.',
-      tech: ['React (Replica)'],
+      tech: ['PHP', 'HTML & CSS'],
       icon: <BookFill />,
       images: ['WizLogin.jpeg', 'WizHome.jpeg', 'WizContent.jpeg'],
       liveLink: '/wiz',
-      liveLabel: 'View demo of course project',
-      tags: ['Course Project', 'Demo'],
+      liveLabel: 'Demo',
+      tags: ['Course Project'],
       category: 'Course Projects',
     },
     {
       title: 'CICSelect',
       description: 'An online voting platform for CICS students with secure voting system and real-time tallying.',
-      tech: ['React (Replica)'],
+      tech: ['ASP.NET MVC', 'C#', 'SQL'],
       icon: <FileEarmarkCheckFill />,
       images: ['CICSSelectHome.jpeg', 'CICSSelectContent.jpeg', 'CICSSelectAdmin.jpeg'],
       liveLink: '/cicselect',
-      liveLabel: 'View demo of course project',
-      tags: ['Course Project', 'Demo'],
+      liveLabel: 'Demo',
+      tags: ['Course Project'],
       category: 'Course Projects',
     },
     {
@@ -301,43 +303,54 @@ function MyProjects() {
       icon: <Recycle />,
       images: ['USTreCycleLogin.jpeg', 'USTreCycleLoading.jpeg', 'USTreCycleHome.jpeg', 'USTreCycleAdmin.jpeg'],
       liveLink: 'https://ust-re-cycle.vercel.app',
-      liveLabel: 'View Live',
+      liveLabel: 'Demo',
       tags: ['Course Project'],
       category: 'Course Projects',
     },
     {
       title: 'Falcon Eye',
       description: 'A comprehensive school safety and incident management platform with real-time tracking and AI chatbot.',
-      tech: ['React', 'Node.js', 'NoSQL', 'Socket.IO'],
+      tech: ['React', 'Node.js', 'NoSQL', 'Firebase', 'BackBlaze'],
       icon: <EyeFill />,
       images: ['falconEye_dashboard.png', 'falconEye_heatmappage.png', 'falconEye_incidentreportpage.png', 'falconEye_lostandfountpage.png'],
-      tags: ['Web App'],
-      category: 'Course Projects',
+      liveLink: 'https://falcon-eye.vercel.app',
+      liveLabel: 'View Live',
+      tags: ['LIVE'],
+      category: 'Thesis Capstone',
+    },
+    {
+      title: 'FIS - Fleet Intelligent System',
+      description: 'FIS is a fleet tracking system that manages vehicles, monitor and track fuel logs, and give dispatch task to riders and drivers.',
+      tech: ['React', 'Next.js', 'PostgreSQL', 'Supabase'],
+      icon: <Truck />,
+      images: ['fisadmin_dashboard.png', 'fisadmin_dispatch.png', 'fisadmin_login.png', 'fisadmin_fuel.png'],
+      imageStyle: { transform: 'scale(1.25)' },
+      tags: [],
+      category: 'Work Projects',
     },
     {
       title: 'Amore Luxe',
-      description: 'A design page showcasing perfumes from Amore Luxe store. Created using React.js, purely frontend.',
+      description: 'A brochure site showcasing perfumes from Amore Luxe store. Created using React.js, purely frontend.',
       tech: ['React'],
       icon: <BrushFill />,
       images: ['AmoreLux_title.jpg', 'AmoreLux_featuredfragances.jpg', 'AmoreLux_menscollection.jpg', 'AmoreLux_womenscollection.jpg'],
       liveLink: 'https://amoreluxe.vercel.app',
       liveLabel: 'View Live',
       tags: [],
-      category: 'Side Projects',
+      category: 'Work Projects',
     },
     {
       title: 'JV TechHub',
       description: 'An inventory project created using Laravel Framework as a partial fulfillment of Web Application Development course.',
-      tech: ['React', 'Tailwind', 'Context API'],
+      tech: ['Laravel', 'MySQL'],
       icon: <BoxSeamFill />,
       images: ['JVTechHub_loginpage.png', 'JVTechHub_dashboard.png'],
       internalLink: '/jvtech',
       liveLabel: 'View demo of course project',
-      tags: ['Demo', 'Web App'],
+      tags: ['Demo', 'Course Project'],
       category: 'Course Projects',
     },
   ];
-
   const handleCategoryChange = (category) => {
     if (category !== activeCategory) {
       setActiveCategory(category);
@@ -362,7 +375,7 @@ function MyProjects() {
           </p>
 
           <div className="project-filters">
-            {['All', 'Course Projects', 'Side Projects', 'Work Projects'].map((category) => (
+            {['All', 'Course Projects', 'Work Projects'].map((category) => (
               <button
                 key={category}
                 className={`filter-btn ${activeCategory === category ? 'active' : ''}`}

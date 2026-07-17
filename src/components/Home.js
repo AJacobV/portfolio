@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const developerCodeString = `const developer = {\n  name: "Angelo Valeros",\n  university: "UST",\n  role: "Web Developer",\n  passion: "Adventure",\n  skills: ["React", "ASP.NET", "PHP"]\n};`;
+const developerCodeString = `const programmer = {\n  name: "Angelo Valeros",\n  university: "UST",\n  role: "Programmer",\n  passion: "Adventure",\n  skills: ["React", "ASP.NET", "PHP"]\n};`;
 
 function Home() {
   // 3D Spatial Drag State
@@ -85,7 +85,7 @@ function Home() {
                 <span className="gold-text">Angelo Jacob A. Valeros</span>
               </h1>
               <h2 className="fade-in-delay-2" style={{ margin: '1rem 0 0', fontSize: 'clamp(1.35rem, 3vw, 2.25rem)', textTransform: 'uppercase', letterSpacing: '0.18em', color: '#e10600', fontWeight: 700 }}>
-                Web Developer &amp; Designer
+                Programmer &amp; Designer
               </h2>
               <p className="fade-in-delay-3" style={{ margin: '1rem 0 0', maxWidth: '38rem', color: '#b2b2b2', fontSize: '1.05rem', lineHeight: 1.7 }}>
                 Crafting beautiful and functional web experiences.
