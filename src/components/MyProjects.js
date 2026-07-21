@@ -312,7 +312,7 @@ function MyProjects() {
       description: 'A comprehensive school safety and incident management platform with real-time tracking and AI chatbot.',
       tech: ['React', 'Node.js', 'NoSQL', 'Firebase', 'BackBlaze'],
       icon: <EyeFill />,
-      images: ['falconEye_dashboard.png', 'falconEye_heatmappage.png', 'falconEye_incidentreportpage.png', 'falconEye_lostandfountpage.png'],
+      images: ['falconEye_dashboard.png', 'falconEye_heatmappage.png', 'falconEye_incidentreportpage.png', 'falconEye_lostandfoundpage.png'],
       liveLink: 'https://falcon-eye.vercel.app',
       liveLabel: 'View Live',
       tags: ['LIVE'],
