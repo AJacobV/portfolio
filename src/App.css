@@ -156,24 +156,22 @@
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: rgba(10, 10, 10, 1);
-  border: 2px solid rgba(225, 6, 0, 0.2);
-  box-shadow: 0 0 10px rgba(225, 6, 0, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: transparent;
+  border: 2px solid transparent;
+  box-shadow: none;
   overflow: hidden;
   transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
   width: 55px;
   height: 120px;
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .navbar.open {
   width: 150px;
   height: 350px;
-  opacity: 1;
-  border: 2px solid #e10600;
-  box-shadow: 0 0 20px rgba(225, 6, 0, 0.25);
+  background: transparent;
+  border: 2px solid transparent;
+  box-shadow: none;
 }
 
 .nav-dots {
@@ -188,9 +186,9 @@
 }
 
 .nav-dots span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
   background: rgba(225, 6, 0, 0.4);
   box-shadow: 0 0 5px rgba(225, 6, 0, 0.2);
   transition: all 0.3s ease;
@@ -243,13 +241,13 @@
   background: transparent;
   border: none;
   color: #f7f7f7;
-  padding: 0.65rem 1rem;
+  padding: 0.5rem 0.8rem;
   width: 90%;
   border-radius: 999px;
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   transition: background 220ms ease, color 220ms ease, transform 220ms ease;
 }
 
@@ -812,42 +810,7 @@
   overflow: hidden;
 }
 
-.loading-slices {
-  position: fixed;
-  inset: 0;
-  z-index: 1001;
-  pointer-events: none;
-}
 
-.loading-slice {
-  position: absolute;
-  left: var(--slice-x1);
-  top: var(--slice-y1);
-  width: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(200,200,210,0.8),
-    rgba(255,255,255,1),
-    rgba(200,200,210,0.8),
-    transparent
-  );
-  border-radius: 1px;
-  transform: rotate(var(--slice-angle));
-  transform-origin: left center;
-  animation: sliceSwipe 0.25s cubic-bezier(0.1,0.9,0.2,1) forwards;
-  animation-delay: var(--slice-delay);
-  filter: drop-shadow(0 0 16px rgba(255,255,255,0.8));
-  opacity: 0;
-}
-
-@keyframes sliceSwipe {
-  0%   { width: 0; opacity: 0; transform: rotate(var(--slice-angle)) scaleY(1); }
-  15%  { opacity: 1; transform: rotate(var(--slice-angle)) scaleY(2); }
-  50%  { width: var(--slice-length); opacity: 1; transform: rotate(var(--slice-angle)) scaleY(3); }
-  100% { width: var(--slice-length); opacity: 0; transform: rotate(var(--slice-angle)) scaleY(0.5); }
-}
 
 .loading-shatter-canvas {
   position: fixed;

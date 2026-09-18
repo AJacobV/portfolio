@@ -42,9 +42,11 @@ function Navbar() {
       onMouseEnter={handleNavMouseEnter}
       onMouseLeave={handleNavMouseLeave}
     >
-      {/* Desktop Dots */}
+      {/* Desktop Lines */}
       <div className="nav-dots desktop-only" onClick={toggleNav}>
-        <span /><span /><span />
+        {['home', 'about', 'skills', 'projects', 'contact'].map((s) => (
+          <span key={s} />
+        ))}
       </div>
       
       {/* Mobile Burger */}

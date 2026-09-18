@@ -87,35 +87,14 @@ function generateFullPageShards(cols, rows) {
   return shards;
 }
 
-function generateRandomSlices(count) {
-  const slices = [];
-  for (let i = 0; i < count; i++) {
-    const x1 = 10 + Math.random() * 80;
-    const y1 = 10 + Math.random() * 80;
-    const angle = (Math.random() - 0.5) * 160;
-    const lengthStr = `clamp(150px, ${15 + Math.random() * 20}vw, 400px)`;
-    slices.push({ x1, y1, angle, length: lengthStr });
-  }
-  return slices;
-}
 
-function pickRandomItems(arr, count) {
-  const shuffled = [...arr].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
-}
 
 function LoadingScreen({ onDone }) {
   const canvasRef = useRef(null);
-  const [phase, setPhase] = useState('idle'); // 'idle' | 'slash' | 'shatter' | 'done'
+  const [phase, setPhase] = useState('idle'); // 'idle' | 'shatter' | 'done'
 
   // Generate 5x4 grid = 40 shards that tile perfectly
   const allShards = useMemo(() => generateFullPageShards(5, 4), []);
-  
-  // Generate 10 random aggressive slashes in a pool, then pick 7 to display
-  const randomSlices = useMemo(() => {
-    const pool = generateRandomSlices(10);
-    return pickRandomItems(pool, 7);
-  }, []);
 
   // --- Canvas-based 60fps glass shatter ---
   useEffect(() => {
@@ -254,12 +233,8 @@ function LoadingScreen({ onDone }) {
   // Phase progression logic
   useEffect(() => {
     if (phase === 'idle') {
-      // Brief pause before slashes begin
-      const timer = setTimeout(() => setPhase('slash'), 600);
-      return () => clearTimeout(timer);
-    } else if (phase === 'slash') {
-      // Longer pause for the 7 slashes to complete before shattering
-      const timer = setTimeout(() => setPhase('shatter'), 900);
+      // Brief pause before shattering begins
+      const timer = setTimeout(() => setPhase('shatter'), 600);
       return () => clearTimeout(timer);
     }
   }, [phase]);
@@ -268,7 +243,7 @@ function LoadingScreen({ onDone }) {
     <div className="loading-screen" role="status" aria-label="Loading portfolio">
       
       {/* Full screen static glass background before it shatters */}
-      {(phase === 'idle' || phase === 'slash') && (
+      {(phase === 'idle') && (
         <div 
           style={{
             position: 'absolute',
@@ -280,28 +255,9 @@ function LoadingScreen({ onDone }) {
       )}
 
       {/* AJAV Text */}
-      {(phase === 'idle' || phase === 'slash') && (
+      {(phase === 'idle') && (
         <div className="loading-core">
           <span className="loading-core-text">AJAV</span>
-        </div>
-      )}
-
-      {/* Aggressive Slash animations */}
-      {phase === 'slash' && (
-        <div className="loading-slices">
-          {randomSlices.map((slice, i) => (
-            <div
-              key={i}
-              className="loading-slice"
-              style={{
-                '--slice-x1': `${slice.x1}%`,
-                '--slice-y1': `${slice.y1}%`,
-                '--slice-angle': `${slice.angle}deg`,
-                '--slice-length': slice.length,
-                '--slice-delay': `${i * 60}ms`, // Adjusted spread for 7 slices
-              }}
-            />
-          ))}
         </div>
       )}
 

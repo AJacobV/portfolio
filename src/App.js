@@ -1,11 +1,9 @@
-import { useState, useCallback } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import AboutMe from './components/AboutMe';
 import MySkills from './components/MySkills';
 import MyProjects from './components/MyProjects';
 import ContactMe from './components/ContactMe';
-import LoadingScreen from './components/LoadingScreen';
 
 import LazySection from './components/LazySection';
 import WizApp from './components/wiz/WizApp';
@@ -15,20 +13,10 @@ import Navbar from './components/Navbar';
 import './App.css';
 
 function PortfolioMain() {
-  const [loading, setLoading] = useState(true);
-  const [contentVisible, setContentVisible] = useState(false);
-
-  const handleLoadingDone = useCallback(() => {
-    setLoading(false);
-    setContentVisible(true);
-  }, []);
-
   return (
     <div className="App">
-      {loading && <LoadingScreen onDone={handleLoadingDone} />}
-
       <Navbar />
-      <main className={`main-content ${contentVisible ? 'visible' : ''}`}>
+      <main className="main-content visible">
         <Home />
 
         <LazySection rootMargin="300px 0px">

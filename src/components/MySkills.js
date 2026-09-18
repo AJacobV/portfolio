@@ -73,22 +73,25 @@ function useScrollVisibility() {
   return [ref, phase];
 }
 
-const cardStyle = {
+const containerCardStyle = {
   background: 'rgba(14,14,14,0.88)',
   border: '1px solid rgba(255,255,255,0.08)',
   boxShadow: '0 24px 90px rgba(0,0,0,0.6)',
   backdropFilter: 'blur(12px)',
-  borderRadius: '14px',
-  padding: '1.25rem 1.5rem',
+  borderRadius: '18px',
+  padding: '4rem',
   position: 'relative',
-  overflow: 'visible',
+  overflow: 'hidden',
+  width: '100%',
+  maxWidth: '1200px',
+  margin: '0 auto',
 };
 
 function MySkills() {
   const [headerRef, headerPhase] = useScrollVisibility();
-  const [cardsRef, cardsPhase] = useScrollVisibility();
-  const [hoveredCard, setHoveredCard] = useState(null);
+  const [contentRef, contentPhase] = useScrollVisibility();
 
+  /*
   const categories = [
     {
       title: 'Development',
@@ -101,19 +104,17 @@ function MySkills() {
     {
       title: 'Quality Assurance',
       desc: 'Systematic testing and bug identification.',
-    },
-    {
-      title: 'Tech & Tools',
-      tags: ['React', 'Angular.js', 'Tailwind', 'Typescript', 'Javascript', 'HTML & CSS', 'PHP', 'Node.js', 'Next.js', 'SQL', 'PostgreSQL', 'NoSQL', 'ASP.NET', 'Laravel', 'Firebase', 'Supabase', 'Blackblaze', 'Vercel', 'Render', 'Flutter'],
-      tagSections: [
-        { name: 'Front-end', tags: ['React', 'Angular.js', 'Tailwind', 'Typescript', 'Javascript', 'HTML & CSS'] },
-        { name: 'Back-end', tags: ['PHP', 'Node.js', 'Next.js', 'SQL', 'PostgreSQL', 'NoSQL'] },
-        { name: 'Frameworks', tags: ['ASP.NET', 'Laravel'] },
-        { name: 'BaaS', tags: ['Firebase', 'Supabase', 'Blackblaze'] },
-        { name: 'PaaS', tags: ['Vercel', 'Render'] },
-        { name: 'Mobile', tags: ['Flutter'] }
-      ],
-    },
+    }
+  ];
+  */
+
+  const tagSections = [
+    { name: 'Front-end', tags: ['React', 'Angular.js', 'Tailwind', 'Typescript', 'Javascript', 'HTML & CSS'] },
+    { name: 'Back-end', tags: ['PHP', 'Node.js', 'Next.js', 'SQL', 'PostgreSQL', 'NoSQL'] },
+    { name: 'Frameworks', tags: ['ASP.NET', 'Laravel'] },
+    { name: 'BaaS', tags: ['Firebase', 'Supabase', 'Blackblaze'] },
+    { name: 'PaaS', tags: ['Vercel', 'Render'] },
+    { name: 'Mobile', tags: ['Flutter'] }
   ];
 
   const getAnimClass = (phase) =>
@@ -137,111 +138,113 @@ function MySkills() {
           </p>
         </div>
 
-        {/* Diagonal category cards - skewed line */}
-        <div
-          ref={cardsRef}
-          className={`skills-cards ${getAnimClass(cardsPhase)}`}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'stretch', // ensures all cards are same height
-            flexWrap: 'nowrap',    // strictly one line
-            gap: '1.5rem',
-            marginBottom: '2rem',
-            overflow: 'visible',   // prevent cropping of skewed edges
-            padding: '20px 40px',  // horizontal padding to compress cards and fit skew
-          }}
-        >
-          {categories.map(({ title, desc, tags, tagSections }, i) => (
-            <div
-              key={title}
-              style={{
-                ...cardStyle,
-                flex: hoveredCard === title ? '3 1 0' : hoveredCard ? '0.6 1 0' : '1 1 0',
-                minHeight: '320px', // expand the height of the cards
-                transform: 'skewX(-12deg)',
-                transition: 'flex 500ms cubic-bezier(0.25, 1, 0.5, 1), transform 400ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 400ms ease',
-                cursor: 'default',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center', // center content vertically in the taller cards
-              }}
-              onMouseEnter={(e) => {
-                if (title === 'Tech & Tools') {
-                  setHoveredCard(title);
-                  e.currentTarget.style.transform = 'skewX(-12deg) scale(1.02) translateY(-5px)';
-                  e.currentTarget.style.boxShadow = '0 30px 60px rgba(225, 6, 0, 0.3)';
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (title === 'Tech & Tools') {
-                  setHoveredCard(null);
-                  e.currentTarget.style.transform = 'skewX(-12deg)';
-                  e.currentTarget.style.boxShadow = '0 24px 90px rgba(0,0,0,0.6)';
-                }
-              }}
-            >
-              {/* Un-skew the inner content so text remains readable */}
-              <div style={{ transform: 'skewX(12deg)', padding: '0 1.5rem' }}>
-                <h3 style={{ margin: '0 0 1rem', color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '1rem', fontWeight: 800, textAlign: title === 'Tech & Tools' ? 'center' : 'left', opacity: title === 'Tech & Tools' && hoveredCard !== title ? 0 : 1, transition: 'opacity 300ms ease' }}>
-                  {title}
-                </h3>
-                {desc && (
-                  <p style={{ margin: 0, color: '#b2b2b2', fontSize: '0.9rem', lineHeight: 1.6 }}>{desc}</p>
-                )}
-                {tags && hoveredCard !== title && (
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', opacity: hoveredCard !== title ? 1 : 0, transition: 'opacity 300ms ease' }}>
-                    {tags.map((tag) => (
-                      <span
-                        key={tag}
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          padding: '0.2rem 0.6rem',
-                          borderRadius: '999px',
-                          fontSize: '0.65rem',
-                          color: '#fff',
-                          background: 'rgba(225,6,0,0.08)',
-                          border: '1px solid rgba(225,6,0,0.25)',
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
+        {/* Big Single Container */}
+        <div ref={contentRef} className={getAnimClass(contentPhase)} style={containerCardStyle}>
+          
+          <h3 style={{ textAlign: 'center', margin: '0 0 4rem', fontSize: '1.8rem', color: '#f7f7f7', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+            Tech & Tools
+          </h3>
+
+          <div style={{ position: 'relative', padding: '1rem 0' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2rem' }}>
+              {tagSections.map((sec, i) => (
+                <div key={sec.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1 1 150px', maxWidth: '220px', position: 'relative' }}>
+                    
+                    <h4 style={{ margin: '0', color: '#f7f7f7', fontSize: '0.9rem', letterSpacing: '0.05em', textTransform: 'uppercase', textAlign: 'center', position: 'relative' }}>
+                      {sec.name}
+                      {/* The glowing dot under the category */}
+                      <div style={{ position: 'absolute', bottom: '-12px', left: '50%', transform: 'translateX(-50%)', width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#e10600', boxShadow: '0 0 10px #e10600', zIndex: 2 }}></div>
+                    </h4>
+                    
+                    {/* The vertical branch line dropping from category through the tags */}
+                    <div style={{ position: 'absolute', top: '1.2rem', bottom: '1rem', left: '50%', transform: 'translateX(-50%)', width: '2px', background: 'linear-gradient(to bottom, rgba(225,6,0,0.6) 0%, rgba(225,6,0,0.05) 100%)', zIndex: 1 }}></div>
+                    
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', width: '100%', marginTop: '2.5rem', zIndex: 2 }}>
+                      {sec.tags.map((tag, tagIdx) => {
+                        const isLeft = tagIdx % 2 === 0;
+                        return (
+                          <div key={tag} style={{ display: 'flex', width: '100%', position: 'relative' }}>
+                            {/* Horizontal connector line */}
+                            <div style={{
+                              position: 'absolute',
+                              top: '50%',
+                              [isLeft ? 'right' : 'left']: '50%',
+                              width: '1.5rem',
+                              height: '2px',
+                              backgroundColor: 'rgba(225,6,0,0.4)',
+                              transform: 'translateY(-50%)'
+                            }}></div>
+                            
+                            <div style={{ width: '50%', display: 'flex', justifyContent: 'flex-end', paddingRight: '1.5rem' }}>
+                              {isLeft && (
+                                <span
+                                  style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    padding: '0.35rem 0.9rem',
+                                    borderRadius: '999px',
+                                    fontSize: '0.75rem',
+                                    fontWeight: 500,
+                                    color: '#fff',
+                                    background: '#151515',
+                                    border: '1px solid rgba(225,6,0,0.3)',
+                                    whiteSpace: 'nowrap',
+                                    transition: 'transform 200ms ease, box-shadow 200ms ease',
+                                    cursor: 'default',
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(-2px)';
+                                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(225, 6, 0, 0.2)';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                    e.currentTarget.style.boxShadow = 'none';
+                                  }}
+                                >
+                                  {tag}
+                                </span>
+                              )}
+                            </div>
+                            <div style={{ width: '50%', display: 'flex', justifyContent: 'flex-start', paddingLeft: '1.5rem' }}>
+                              {!isLeft && (
+                                <span
+                                  style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    padding: '0.35rem 0.9rem',
+                                    borderRadius: '999px',
+                                    fontSize: '0.75rem',
+                                    fontWeight: 500,
+                                    color: '#fff',
+                                    background: '#151515',
+                                    border: '1px solid rgba(225,6,0,0.3)',
+                                    whiteSpace: 'nowrap',
+                                    transition: 'transform 200ms ease, box-shadow 200ms ease',
+                                    cursor: 'default',
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(-2px)';
+                                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(225, 6, 0, 0.2)';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                    e.currentTarget.style.boxShadow = 'none';
+                                  }}
+                                >
+                                  {tag}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                )}
-                {tagSections && hoveredCard === title && (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginTop: '0.5rem', opacity: hoveredCard === title ? 1 : 0, transition: 'opacity 300ms ease' }}>
-                    {tagSections.map((sec) => (
-                      <div key={sec.name}>
-                        <h4 style={{ margin: '0 0 0.3rem', color: '#b2b2b2', fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{sec.name}</h4>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
-                          {sec.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              style={{
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                padding: '0.2rem 0.5rem',
-                                borderRadius: '999px',
-                                fontSize: '0.65rem',
-                                color: '#fff',
-                                background: 'rgba(225,6,0,0.08)',
-                                border: '1px solid rgba(225,6,0,0.25)',
-                                whiteSpace: 'nowrap',
-                              }}
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                ))}
               </div>
             </div>
-          ))}
+
+
         </div>
 
       </div>

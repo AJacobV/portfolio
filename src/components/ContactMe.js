@@ -152,10 +152,10 @@ function ContactMe() {
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: 0, color: '#f7f7f7', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '0.95rem', fontWeight: 800 }}>Email</h3>
                   <p style={{ margin: '0.25rem 0 0.75rem', color: '#b2b2b2', fontSize: '0.9rem', wordBreak: 'break-all' }}>
-                    angelojacob.valeros.cics@ust.edu.ph
+                    bocajvaleros@gmail.com
                   </p>
                   <a
-                    href="https://mail.google.com/mail/?view=cm&fs=1&to=angelojacob.valeros.cics@ust.edu.ph&su=Inquiry"
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=bocajvaleros@gmail.com&su=Inquiry"
                     className="contact-link"
                     style={{ alignSelf: 'flex-start', padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}
                     target="_blank"

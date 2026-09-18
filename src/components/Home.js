@@ -91,7 +91,7 @@ function Home() {
                 Crafting beautiful and functional web experiences.
                 <br />
                 <span style={{ display: 'inline-block', marginTop: '0.75rem', color: '#f7f7f7', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-                  IT Student at UST
+                  BS Information Technology, Cum Laude at UST
                 </span>
               </p>
               <div className="fade-in-delay-4" style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginTop: '2rem' }}>

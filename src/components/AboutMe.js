@@ -297,7 +297,7 @@ function AboutMe() {
                   Who I Am
                 </h3>
                 <p style={{ margin: 0, color: '#b2b2b2', lineHeight: 1.75, fontSize: '0.98rem' }}>
-                  I am a graduate student with an award of Cum Laude in Bachelor of Science in Information Technology at the{' '}
+                  I graduated Cum Laude with a Bachelor of Science in Information Technology from the{' '}
                   <span className="gold-text" style={{ fontWeight: 600 }}>University of Santo Tomas</span>{' '}
                   with a passion for technology and adventure. I started my programming journey with
                   Java and have since expanded to PHP, React, Node.js, SQL, and ASP.NET
@@ -373,7 +373,7 @@ function AboutMe() {
                       borderTop: '8px solid rgba(15,15,15,0.95)',
                     }} />
                     
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=angelojacob.valeros.cics@ust.edu.ph&su=Inquiry" target="_blank" rel="noopener noreferrer" className="social-icon" style={{ fontSize: '1.25rem', color: '#f7f7f7', width: '2.75rem', height: '2.75rem' }} title="Email"><EnvelopeFill /></a>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=bocajvaleros@gmail.com&su=Inquiry" target="_blank" rel="noopener noreferrer" className="social-icon" style={{ fontSize: '1.25rem', color: '#f7f7f7', width: '2.75rem', height: '2.75rem' }} title="Email"><EnvelopeFill /></a>
                     <a href="https://github.com/AJacobV" target="_blank" rel="noopener noreferrer" className="social-icon" style={{ fontSize: '1.25rem', color: '#f7f7f7', width: '2.75rem', height: '2.75rem' }} title="GitHub"><Github /></a>
                     <a href="https://www.facebook.com/angelojacob.valeros" target="_blank" rel="noopener noreferrer" className="social-icon" style={{ fontSize: '1.25rem', color: '#f7f7f7', width: '2.75rem', height: '2.75rem' }} title="Facebook"><Facebook /></a>
                   </div>
