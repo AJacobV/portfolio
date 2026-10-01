@@ -1,54 +1,45 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
-import AboutMe from './components/AboutMe';
-import MySkills from './components/MySkills';
-import MyProjects from './components/MyProjects';
-import ContactMe from './components/ContactMe';
-
-import LazySection from './components/LazySection';
-import WizApp from './components/wiz/WizApp';
-import CICSApp from './components/CICSElect/CICSApp';
-import JvTechApp from './components/jvtech/JvTechApp';
-import Navbar from './components/Navbar';
-import './App.css';
-
-function PortfolioMain() {
-  return (
-    <div className="App">
-      <Navbar />
-      <main className="main-content visible">
-        <Home />
-
-        <LazySection rootMargin="300px 0px">
-          <AboutMe />
-        </LazySection>
-
-        <LazySection rootMargin="400px 0px">
-          <MySkills />
-        </LazySection>
-
-        <LazySection rootMargin="400px 0px">
-          <MyProjects />
-        </LazySection>
-
-        <LazySection rootMargin="400px 0px">
-          <ContactMe />
-        </LazySection>
-      </main>
-    </div>
-  );
-}
+import React from 'react';
+import Banner from './components/Banner';
+import Profile from './components/Profile';
+import AboutSection from './components/AboutSection';
+import AchievementsSection from './components/AchievementsSection';
+import TechStackSection from './components/TechStackSection';
+import ProjectsSection from './components/ProjectsSection';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<PortfolioMain />} />
-        <Route path="/wiz/*" element={<WizApp />} />
-        <Route path="/cicselect/*" element={<CICSApp />} />
-        <Route path="/jvtech/*" element={<JvTechApp />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="h-screen w-screen overflow-hidden bg-white flex flex-col">
+      
+      {/* Header Area */}
+      <div className="relative shrink-0">
+        <Banner />
+        <Profile />
+      </div>
+
+      {/* Content Grid */}
+      <div className="flex-1 w-full max-w-7xl mx-auto px-6 pt-16 sm:pt-20 md:pt-28 pb-8 flex flex-col min-h-0">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 flex-1 min-h-0">
+          
+          {/* Column 1: Left */}
+          <div className="flex flex-col gap-6 md:gap-8 h-full min-h-0">
+            <AboutSection />
+            <AchievementsSection />
+          </div>
+          
+          {/* Column 2: Middle */}
+          <div className="flex flex-col h-full min-h-0">
+            <TechStackSection />
+          </div>
+          
+          {/* Column 3: Right */}
+          <div className="flex flex-col h-full min-h-0">
+            <ProjectsSection />
+          </div>
+
+        </div>
+      </div>
+      
+    </div>
   );
 }
 
