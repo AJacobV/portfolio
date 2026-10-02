@@ -49,7 +49,13 @@ function AboutDetail({ isActive, onClose }) {
     },
   ];
 
-  const techs = ['React', 'Node.js', 'JavaScript', 'TypeScript', 'Java', 'PHP', 'ASP.NET', 'SQL', 'Tailwind CSS', 'Framer Motion', 'Git'];
+  // Order: Frontend -> Backend -> Frameworks
+  const techs = [
+    'JavaScript', 'TypeScript', 'React', 'Tailwind CSS', // Frontend
+    'Node.js', 'Java', 'Kotlin', 'PHP', 'SQL', // Backend
+    'Next.js', 'Laravel', 'ASP.NET', // Frameworks
+    'Git' // Tools
+  ];
 
   const cardVariants = {
     hidden: { opacity: 0, y: 24 },

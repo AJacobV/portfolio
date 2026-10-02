@@ -28,6 +28,7 @@ const KEYWORD_MAP = [
       'firebase', 'supabase', 'tailwind', 'prisma', 'fullstack', 'frontend',
       'ui', 'ux', 'capstone', 'internship', 'fleet', 'dispatch', 'fuel',
       'lost', 'found', 'incident', 'task', 'management', 'excel', 'desktop',
+      'laravel', 'kotlin', 'java', 'php'
     ],
   },
 ];
