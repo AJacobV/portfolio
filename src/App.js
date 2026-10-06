@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import Banner from './components/Banner';
 import Profile from './components/Profile';
 import AboutSection from './components/AboutSection';
@@ -14,25 +14,6 @@ function App() {
   const [activeSection, setActiveSection] = useState(null);
   const [origin, setOrigin] = useState("50% 50%"); 
   
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [isHoveringNav, setIsHoveringNav] = useState(false);
-  const scrollTimeout = useRef(null);
-
-  useEffect(() => {
-    const handleWheel = () => {
-      setIsScrolling(true);
-      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
-      scrollTimeout.current = setTimeout(() => {
-        setIsScrolling(false);
-      }, 1500);
-    };
-    window.addEventListener('wheel', handleWheel);
-    return () => {
-      window.removeEventListener('wheel', handleWheel);
-      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
-    };
-  }, []);
-
   const getOriginForElement = (elId) => {
     const el = document.getElementById(elId);
     const wrapper = document.getElementById("zoom-wrapper");
@@ -170,8 +151,6 @@ function App() {
       {/* RIGHT EDGE NAVIGATION CONTAINER (Invisible Hover Zone) */}
       <div 
         className="fixed right-0 top-0 w-24 h-full z-[290]"
-        onMouseEnter={() => setIsHoveringNav(true)}
-        onMouseLeave={() => setIsHoveringNav(false)}
       />
 
       {/* RIGHT EDGE NAVIGATION ITEMS */}
