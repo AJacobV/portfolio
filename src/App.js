@@ -37,15 +37,11 @@ function App() {
     const el = document.getElementById(elId);
     const wrapper = document.getElementById("zoom-wrapper");
     if (el && wrapper) {
-      let top = 0;
-      let left = 0;
-      let curr = el;
-      while (curr && curr !== wrapper) {
-        top += curr.offsetTop;
-        left += curr.offsetLeft;
-        curr = curr.offsetParent;
-      }
-      return `${left + el.offsetWidth / 2}px ${top + el.offsetHeight / 2}px`;
+      const elRect = el.getBoundingClientRect();
+      const wrapperRect = wrapper.getBoundingClientRect();
+      const left = elRect.left - wrapperRect.left;
+      const top = elRect.top - wrapperRect.top;
+      return `${left + elRect.width / 2}px ${top + elRect.height / 2}px`;
     }
     return null;
   };
@@ -95,10 +91,24 @@ function App() {
   return (
     <div className="h-screen w-full overflow-hidden bg-[#0a192f] relative">
       
+      {/* Ambient Glow Effects (moved outside zoom-wrapper so they don't extend scrollHeight) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <motion.div 
+          className="absolute top-[-20%] left-[-10%] w-[60vw] h-[40vw] bg-[#38bdf8] rounded-[100%] filter blur-[100px] opacity-20"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div 
+          className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[70vw] bg-[#818cf8] rounded-[100%] filter blur-[100px] opacity-10"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+        />
+      </div>
+
       {/* BACKGROUND LAYER: The whole page zooming in */}
       <motion.div 
         id="zoom-wrapper"
-        className="h-screen w-full overflow-hidden flex flex-col will-change-transform"
+        className="h-screen w-full overflow-y-auto overflow-x-hidden flex flex-col will-change-transform z-10 relative"
         animate={{ 
           scale: activeSection ? 4 : 1, 
           opacity: activeSection ? 0 : 1,
@@ -107,48 +117,49 @@ function App() {
         transition={{ duration: 0.8, ease: "easeInOut" }}
         style={{ transformOrigin: origin }}
       >
-        {/* Ambient Glow Effects */}
-        <motion.div 
-          className="absolute top-[-20%] left-[-10%] w-[60vw] h-[40vw] bg-[#38bdf8] rounded-[100%] filter blur-[100px] opacity-20 pointer-events-none"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div 
-          className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[70vw] bg-[#818cf8] rounded-[100%] filter blur-[100px] opacity-10 pointer-events-none"
-          animate={{ rotate: -360 }}
-          transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
-        />
 
         <div className="relative shrink-0">
           <Banner />
           <Profile />
         </div>
-        <div className="flex-1 w-full pl-6 pr-16 md:pl-12 md:pr-24 pt-20 sm:pt-24 md:pt-32 pb-8 flex flex-col min-h-0">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 flex-1 min-h-0">
+        <div className="flex-1 w-full pl-6 pr-16 md:pl-12 md:pr-24 pt-20 sm:pt-24 md:pt-32 pb-8 flex flex-col">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 flex-1 min-h-[500px]">
             
             {/* Left Column (1/3 width) */}
-            <div className="flex flex-col gap-6 md:gap-8 h-full min-h-0 md:col-span-1">
+            <div className="flex flex-col gap-6 md:gap-8 h-full md:col-span-1">
               <AboutSection 
-                className="flex-[3] cursor-pointer" 
+                className="flex-[3] cursor-pointer min-h-[250px]" 
                 onClick={() => handleZoomTo("about-section")}
               />
               <AchievementsSection 
-                className="flex-[2] cursor-pointer" 
+                className="flex-[2] cursor-pointer min-h-[200px]" 
                 onClick={() => handleZoomTo("achievements-section")}
               />
             </div>
             
             {/* Right Column (2/3 width) */}
-            <div className="flex flex-col gap-6 md:gap-8 h-full min-h-0 md:col-span-2">
+            <div className="flex flex-col gap-6 md:gap-8 h-full md:col-span-2">
               <TechStackSection className="h-12 sm:h-16 md:h-20 shrink-0" onNavigate={handleZoomTo} />
               <ProjectsSection 
-                className="flex-1 cursor-pointer" 
+                className="flex-1 cursor-pointer min-h-[300px]" 
                 onClick={() => handleZoomTo("projects-section")}
               />
             </div>
 
           </div>
         </div>
+
+        {/* FOOTER */}
+        <footer className="w-full py-8 border-t border-white/10 mt-auto flex flex-col items-center justify-center gap-4 bg-slate-900/50">
+          <div className="flex gap-6 text-slate-400">
+            <button onClick={() => handleZoomTo("about-section")} className="hover:text-[#38bdf8] transition-colors font-medium">About</button>
+            <button onClick={() => handleZoomTo("achievements-section")} className="hover:text-[#38bdf8] transition-colors font-medium">Contact</button>
+            <button onClick={() => handleZoomTo("projects-section")} className="hover:text-[#38bdf8] transition-colors font-medium">Projects</button>
+          </div>
+          <p className="text-slate-500 text-sm">
+            &copy; {new Date().getFullYear()} Angelo Valeros. All rights reserved.
+          </p>
+        </footer>
       </motion.div>
 
       {/* FOREGROUND LAYERS */}

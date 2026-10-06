@@ -43,7 +43,7 @@ function AchievementsDetail({ isActive, onClose }) {
                   </div>
                   <div>
                     <h4 className="text-sm text-slate-400 font-medium">Email</h4>
-                    <p className="text-lg font-bold">hello@valfiles.com</p>
+                    <p className="text-lg font-bold">bocajvaleros@gmail.com</p>
                   </div>
                 </div>
 
@@ -53,7 +53,7 @@ function AchievementsDetail({ isActive, onClose }) {
                   </div>
                   <div>
                     <h4 className="text-sm text-slate-400 font-medium">Location</h4>
-                    <p className="text-lg font-bold">Manila, Philippines</p>
+                    <p className="text-lg font-bold">Quezon City Fariview, Philippines</p>
                   </div>
                 </div>
               </div>
